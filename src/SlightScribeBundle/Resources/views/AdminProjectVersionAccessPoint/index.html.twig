@@ -26,6 +26,12 @@
         <p><a href="{{  path('slight_scribe_admin_project_version_communication_show',{'projectId':project.publicId,'versionId':version.publicId,'communicationId':accessPoint.communication.publicId}) }}">{{  accessPoint.communication.titleAdmin }}</a></p>
     {%  endif %}
 
+    <p>
+        <a href="{{  path('slight_scribe_admin_project_version_access_point_edit',{'projectId':project.publicId,'versionId':version.publicId,'accessPointId':accessPoint.publicId}) }}" class="btn btn-default">
+            Edit
+        </a>
+    </p>
+
     {% if fields %}
         <table class="table table-striped">
             <thead>

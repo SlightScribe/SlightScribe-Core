@@ -58,6 +58,10 @@ slight_scribe_admin_project_version_access_point_show:
     path:     /admin/project/{projectId}/version/{versionId}/accesspoint/{accessPointId}
     defaults: { _controller: SlightScribeBundle:AdminProjectVersionAccessPoint:index }
 
+slight_scribe_admin_project_version_access_point_edit:
+    path:     /admin/project/{projectId}/version/{versionId}/accesspoint/{accessPointId}/edit
+    defaults: { _controller: SlightScribeBundle:AdminProjectVersionAccessPointEdit:edit }
+
 slight_scribe_admin_project_version_runs_list:
     path:     /admin/project/{projectId}/version/{versionId}/run
     defaults: { _controller: SlightScribeBundle:AdminProjectVersion:runs }
