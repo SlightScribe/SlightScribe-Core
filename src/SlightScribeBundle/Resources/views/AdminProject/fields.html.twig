@@ -22,6 +22,7 @@
             <tr>
                 <th>Field</th>
                 <th>Title</th>
+                <th>Type</th>
                 <th></th>
             </tr>
             </thead>
@@ -30,6 +31,13 @@
                 <tr>
                     <td>{{ field.publicId }}</td>
                     <td>{{ field.titleAdmin }}</td>
+                    <td>
+                        {%  if field.isTypeText %}
+                            Text
+                        {%  elseif field.isTypeTextArea %}
+                            TextArea
+                        {%  endif %}
+                    </td>
                     <td class="action-link"></td>
                 </tr>
             {% endfor %}
