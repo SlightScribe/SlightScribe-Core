@@ -29,8 +29,10 @@
                 This is version: {{  latestProjectVersion.titleAdmin }}
             </li>
         {% endif %}
-        <li class="list-group-item"> <a href="{{  path('slight_scribe_admin_project_versions_published_list',{'projectId':project.publicId}) }}" class="btn btn-default">Versions Published</a></li>
-        <li class="list-group-item"> <a href="{{  path('slight_scribe_admin_project_fields_list',{'projectId':project.publicId}) }}" class="btn btn-default">Fields</a></li>
+        <li class="list-group-item"><a href="{{  path('slight_scribe_admin_project_versions_published_list',{'projectId':project.publicId}) }}" class="btn btn-default">Versions Published</a></li>
+        <li class="list-group-item"><a href="{{  path('slight_scribe_admin_project_fields_list',{'projectId':project.publicId}) }}" class="btn btn-default">Fields</a></li>
+        <li class="list-group-item"><a href="{{  path('slight_scribe_admin_project_new_field_text',{'projectId':project.publicId}) }}" class="btn btn-warning">New Field (Text)</a></li>
+        <li class="list-group-item"><a href="{{  path('slight_scribe_admin_project_new_field_textarea',{'projectId':project.publicId}) }}" class="btn btn-warning">New Field (TextArea)</a></li>
     </ul>
 
 {% endblock %}

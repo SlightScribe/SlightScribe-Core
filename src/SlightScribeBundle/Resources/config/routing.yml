@@ -86,6 +86,14 @@ slight_scribe_admin_project_fields_list:
     path:     /admin/project/{projectId}/fields
     defaults: { _controller: SlightScribeBundle:AdminProject:fields }
 
+slight_scribe_admin_project_new_field_text:
+    path:     /admin/project/{projectId}/newfield/text
+    defaults: { _controller: SlightScribeBundle:AdminProjectEdit:newFieldText }
+
+slight_scribe_admin_project_new_field_textarea:
+    path:     /admin/project/{projectId}/newfield/textarea
+    defaults: { _controller: SlightScribeBundle:AdminProjectEdit:newFieldTextArea }
+
 slight_scribe_admin_block_ip_list:
     path:     /admin/block/ip/
     defaults: { _controller: SlightScribeBundle:Admin:blockIPs }

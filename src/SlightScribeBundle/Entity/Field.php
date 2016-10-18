@@ -42,8 +42,11 @@ class Field {
      *
      * @ORM\Column(name="type", type="string", length=250, nullable=false)
      */
-    private $type = "TEXT";
+    private $type = self::TYPE_TEXT;
 
+
+    const TYPE_TEXT = "TEXT";
+    const TYPE_TEXTAREA = "TEXTAREA";
 
 
     /**
@@ -128,11 +131,11 @@ class Field {
     }
 
     public function isTypeText() {
-        return strtolower($this->type) == 'text';
+        return strtolower($this->type) == strtolower(self::TYPE_TEXT);
     }
 
     public function isTypeTextArea() {
-        return strtolower($this->type) == 'textarea';
+        return strtolower($this->type) == strtolower(self::TYPE_TEXTAREA);
     }
 
     /**
