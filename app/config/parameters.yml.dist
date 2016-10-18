@@ -1,0 +1,33 @@
+# This file is a "template" of what your parameters.yml file should look like
+# Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
+# http://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
+parameters:
+    database_host:     127.0.0.1
+    database_port:     ~
+    database_name:     symfony
+    database_user:     root
+    database_password: ~
+    # You should uncomment this if you want use pdo_sqlite
+    # database_path: "%kernel.root_dir%/data.db3"
+
+    mailer_transport:  smtp
+    mailer_host:       127.0.0.1
+    mailer_port:       25
+    mailer_user:       ~
+    mailer_password:   ~
+
+    # A secret key that's used to generate certain security-related tokens
+    secret:            ThisTokenIsNotSoSecretChangeIt
+
+    anti_spam_all_projects_block_ip_after_attempts: 1000
+    anti_spam_all_projects_block_ip_after_attempts_in_seconds: 60
+    anti_spam_all_projects_block_email_after_attempts: 1000
+    anti_spam_all_projects_block_email_after_attempts_in_seconds: 60
+
+    # Must Configure This so Stop URL put in emails is complete
+    router.request_context.host: example.org
+    router.request_context.scheme: https
+    router.request_context.base_url:
+
+    from_email: hello@example.com
+    from_email_name: Hello

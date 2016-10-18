@@ -1,0 +1,43 @@
+{#
+#  @license 3-clause BSD https://github.com/SlightScribe/SlightScribe-Core/blob/master/LICENSE.md
+#  @link https://github.com/SlightScribe/SlightScribe-Core
+#}
+
+
+{%  extends 'SlightScribeBundle::base.html.twig' %}
+
+{% block main %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('slight_scribe_admin_homepage') }}">Admin</a></li>
+        <li class="active">Block Emails</li>
+    </ol>
+
+    {% if blockEmails %}
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Email</th>
+                <th>Email (Clean)</th>
+                <th>Started</th>
+                <th>Finished</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for blockEmail in blockEmails %}
+                <tr>
+                    <td>{{ blockEmail.email }}</td>
+                    <td>{{ blockEmail.emailClean }}</td>
+                    <td>{{ blockEmail.startedAt | date('c')  }}</td>
+                    <td>{%  if blockEmail.finishedAt  %}{{ blockEmail.finishedAt | date('c')  }}{%  else %}n/a{%  endif %}</td>
+                    <td class="action-link"></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No blockEmails</p>
+    {% endif %}
+
+{% endblock %}

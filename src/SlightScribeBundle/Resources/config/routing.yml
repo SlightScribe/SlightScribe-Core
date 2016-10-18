@@ -1,0 +1,108 @@
+slight_scribe_homepage:
+    path:     /
+    defaults: { _controller: SlightScribeBundle:Default:index }
+
+########################################### ADMIN
+slight_scribe_admin_homepage:
+    path:     /admin/
+    defaults: { _controller: SlightScribeBundle:Admin:index }
+
+slight_scribe_admin_new_project:
+    path:     /admin/newproject/
+    defaults: { _controller: SlightScribeBundle:Admin:newProject }
+
+
+slight_scribe_admin_projects_list:
+    path:     /admin/project/
+    defaults: { _controller: SlightScribeBundle:Admin:projects }
+
+
+slight_scribe_admin_project_show:
+    path:     /admin/project/{projectId}
+    defaults: { _controller: SlightScribeBundle:AdminProject:index }
+
+slight_scribe_admin_project_versions_published_list:
+    path:     /admin/project/{projectId}/versionpublished
+    defaults: { _controller: SlightScribeBundle:AdminProject:versionsPublished }
+
+
+slight_scribe_admin_project_versions_list:
+    path:     /admin/project/{projectId}/version
+    defaults: { _controller: SlightScribeBundle:AdminProject:versions }
+
+slight_scribe_admin_project_version_show:
+    path:     /admin/project/{projectId}/version/{versionId}
+    defaults: { _controller: SlightScribeBundle:AdminProjectVersion:index }
+
+slight_scribe_admin_project_version_communications_list:
+    path:     /admin/project/{projectId}/version/{versionId}/communication
+    defaults: { _controller: SlightScribeBundle:AdminProjectVersion:communications }
+
+slight_scribe_admin_project_version_communication_show:
+    path:     /admin/project/{projectId}/version/{versionId}/communication/{communicationId}
+    defaults: { _controller: SlightScribeBundle:AdminProjectVersionCommunication:index }
+
+slight_scribe_admin_project_version_communication_edit:
+    path:     /admin/project/{projectId}/version/{versionId}/communication/{communicationId}/edit
+    defaults: { _controller: SlightScribeBundle:AdminProjectVersionCommunicationEdit:edit }
+
+slight_scribe_admin_project_version_communication_attachment_show:
+    path:     /admin/project/{projectId}/version/{versionId}/communication/{communicationId}/attachment/{attachmentId}
+    defaults: { _controller: SlightScribeBundle:AdminProjectVersionCommunicationAttachment:index }
+
+slight_scribe_admin_project_version_access_points_list:
+    path:     /admin/project/{projectId}/version/{versionId}/accesspoint
+    defaults: { _controller: SlightScribeBundle:AdminProjectVersion:accessPoints }
+
+slight_scribe_admin_project_version_access_point_show:
+    path:     /admin/project/{projectId}/version/{versionId}/accesspoint/{accessPointId}
+    defaults: { _controller: SlightScribeBundle:AdminProjectVersionAccessPoint:index }
+
+slight_scribe_admin_project_version_runs_list:
+    path:     /admin/project/{projectId}/version/{versionId}/run
+    defaults: { _controller: SlightScribeBundle:AdminProjectVersion:runs }
+
+slight_scribe_admin_project_version_run_show:
+    path:     /admin/project/{projectId}/version/{versionId}/run/{runId}
+    defaults: { _controller: SlightScribeBundle:AdminProjectVersionRun:index }
+
+slight_scribe_admin_project_version_files_list:
+    path:     /admin/project/{projectId}/version/{versionId}/file
+    defaults: { _controller: SlightScribeBundle:AdminProjectVersion:files }
+
+slight_scribe_admin_project_version_file_show:
+    path:     /admin/project/{projectId}/version/{versionId}/file/{fileId}
+    defaults: { _controller: SlightScribeBundle:AdminProjectVersionFile:index }
+
+slight_scribe_admin_project_version_file_edit:
+    path:     /admin/project/{projectId}/version/{versionId}/file/{fileId}/edit
+    defaults: { _controller: SlightScribeBundle:AdminProjectVersionFileEdit:edit }
+
+slight_scribe_admin_project_fields_list:
+    path:     /admin/project/{projectId}/fields
+    defaults: { _controller: SlightScribeBundle:AdminProject:fields }
+
+slight_scribe_admin_block_ip_list:
+    path:     /admin/block/ip/
+    defaults: { _controller: SlightScribeBundle:Admin:blockIPs }
+
+slight_scribe_admin_block_email_list:
+    path:     /admin/block/email/
+    defaults: { _controller: SlightScribeBundle:Admin:blockEmails }
+
+
+########################################### USER
+
+slight_scribe_project_run_create:
+    path:     /project/{projectId}/run
+    defaults: { _controller: SlightScribeBundle:Project:create }
+
+
+slight_scribe_project_run_stop:
+    path:     /project/{projectId}/stop/{runId}/{securityKey}
+    defaults: { _controller: SlightScribeBundle:ProjectRun:stop }
+
+
+slight_scribe_project_run_file:
+    path:     /project/{projectId}/file/{runId}/{securityKey}/{fileId}
+    defaults: { _controller: SlightScribeBundle:ProjectRun:file }

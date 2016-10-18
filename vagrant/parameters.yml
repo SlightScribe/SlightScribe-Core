@@ -1,0 +1,22 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: app
+    database_user: root
+    database_password: password
+    mailer_transport: smtp
+    mailer_port:       1025
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    secret: ThisTokenIsNotSoSecretChangeIt
+    server_host: null
+    has_ssl: false
+
+    router.request_context.host: localhost:8080
+    router.request_context.scheme: http
+    router.request_context.base_url:
+
+    from_email: hello@example.com
+    from_email_name: Hello

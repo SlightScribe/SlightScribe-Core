@@ -1,0 +1,41 @@
+{#
+#  @license 3-clause BSD https://github.com/SlightScribe/SlightScribe-Core/blob/master/LICENSE.md
+#  @link https://github.com/SlightScribe/SlightScribe-Core
+#}
+
+
+{%  extends 'SlightScribeBundle::base.html.twig' %}
+
+{% block main %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('slight_scribe_admin_homepage') }}">Admin</a></li>
+        <li class="active">Block IPs</li>
+    </ol>
+
+    {% if blockIPs %}
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>IP</th>
+                <th>Started</th>
+                <th>Finished</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for blockIP in blockIPs %}
+                <tr>
+                    <td>{{ blockIP.ip }}</td>
+                    <td>{{ blockIP.startedAt | date('c')  }}</td>
+                    <td>{%  if blockIP.finishedAt  %}{{ blockIP.finishedAt | date('c')  }}{%  else %}n/a{%  endif %}</td>
+                    <td class="action-link"></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No blockIPs</p>
+    {% endif %}
+
+{% endblock %}

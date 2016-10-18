@@ -1,0 +1,37 @@
+{#
+#  @license 3-clause BSD https://github.com/SlightScribe/SlightScribe-Core/blob/master/LICENSE.md
+#  @link https://github.com/SlightScribe/SlightScribe-Core
+#}
+
+
+{%  extends 'SlightScribeBundle::base.html.twig' %}
+
+{% block main %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('slight_scribe_admin_homepage') }}">Admin</a></li>
+        <li class="active">Projects</li>
+    </ol>
+
+    {% if projects %}
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Project</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for project in projects %}
+                <tr>
+                    <td>{{ project.titleAdmin }}</td>
+                    <td class="action-link"><a href="{{  path('slight_scribe_admin_project_show',{'projectId':project.publicId}) }}" class="btn btn-default">View</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No projects</p>
+    {% endif %}
+
+{% endblock %}

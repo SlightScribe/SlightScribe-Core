@@ -1,0 +1,15 @@
+/**
+ *  @license 3-clause BSD https://github.com/SlightScribe/SlightScribe-Core/blob/master/LICENSE.md
+ *  @link https://github.com/SlightScribe/SlightScribe-Core
+ */
+
+#footer {
+    padding-top: 30px;
+    font-size: 80%;
+    font-style: italic;
+    text-align: center;
+}
+
+form .cancel {
+    text-align: right;
+}
