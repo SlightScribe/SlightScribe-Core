@@ -12,7 +12,7 @@
         <li><a href="{{ path('slight_scribe_admin_homepage') }}">Admin</a></li>
         <li><a href="{{ path('slight_scribe_admin_project_show',{ 'projectId':project.publicId }) }}">Project: {{  project.titleAdmin }}</a></li>
         <li><a href="{{ path('slight_scribe_admin_project_version_show',{ 'projectId':project.publicId,'versionId':version.publicId }) }}">Version: {{  version.titleAdmin }}</a></li>
-        <li><a href="{{ path('slight_scribe_admin_project_version_file_show',{ 'projectId':project.publicId,'versionId':version.publicId, 'fileId':file.publicId }) }}">File: {{  version.titleAdmin }}</a></li>
+        <li><a href="{{ path('slight_scribe_admin_project_version_file_show',{ 'projectId':project.publicId,'versionId':version.publicId, 'fileId':file.publicId }) }}">File: {{  file.titleAdmin }}</a></li>
         <li class="active">Edit</li>
     </ol>
 
