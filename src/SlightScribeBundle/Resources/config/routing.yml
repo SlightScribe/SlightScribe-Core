@@ -34,6 +34,12 @@ slight_scribe_admin_project_version_show:
     path:     /admin/project/{projectId}/version/{versionId}
     defaults: { _controller: SlightScribeBundle:AdminProjectVersion:index }
 
+
+slight_scribe_admin_project_version_new_file:
+    path:     /admin/project/{projectId}/version/{versionId}/new/file
+    defaults: { _controller: SlightScribeBundle:AdminProjectVersionEdit:newFile }
+
+
 slight_scribe_admin_project_version_communications_list:
     path:     /admin/project/{projectId}/version/{versionId}/communication
     defaults: { _controller: SlightScribeBundle:AdminProjectVersion:communications }
