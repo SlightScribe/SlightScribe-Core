@@ -39,6 +39,10 @@ slight_scribe_admin_project_version_new_file:
     path:     /admin/project/{projectId}/version/{versionId}/new/file
     defaults: { _controller: SlightScribeBundle:AdminProjectVersionEdit:newFile }
 
+slight_scribe_admin_project_version_new_communication:
+    path:     /admin/project/{projectId}/version/{versionId}/new/communication
+    defaults: { _controller: SlightScribeBundle:AdminProjectVersionEdit:newCommunication }
+
 
 slight_scribe_admin_project_version_communications_list:
     path:     /admin/project/{projectId}/version/{versionId}/communication
