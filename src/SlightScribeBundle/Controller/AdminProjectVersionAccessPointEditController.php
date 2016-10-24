@@ -104,4 +104,51 @@ class AdminProjectVersionAccessPointEditController extends AdminProjectVersionAc
 
 
 
+
+    public function editFilesAction($projectId, $versionId, $accessPointId, Request $request)
+    {
+        // build
+        $this->build($projectId, $versionId, $accessPointId);
+        //data
+
+        $doctrine = $this->getDoctrine()->getManager();
+
+
+        $projectFileRepo = $doctrine->getRepository('SlightScribeBundle:File');
+        $accessPointHasFileRepo = $doctrine->getRepository('SlightScribeBundle:AccessPointHasFile');
+
+        ## TODO CSFR protection
+        if ($request->request->get('action') == 'add') {
+            $file = $projectFileRepo->findOneBy(array('projectVersion'=>$this->projectVersion, 'publicId'=> $request->request->get('id') ));
+            if ($file) {
+                $accessPointHasFileRepo->addFileToAccessPoint($file, $this->accessPoint);
+            }
+        } else if ($request->request->get('action') == 'remove') {
+            $file = $projectFileRepo->findOneBy(array('projectVersion'=>$this->projectVersion, 'publicId'=> $request->request->get('id') ));
+            if ($file) {
+                $accessPointHasFileRepo->removeFileFromAccessPoint($file, $this->accessPoint);
+            }
+        }
+
+
+        $projectFiles = array();
+        foreach($projectFileRepo->findBy(array('projectVersion'=>$this->projectVersion)) as $file) {
+            $projectFiles[] = array(
+                'file' => $file,
+                'isExisting' => $accessPointHasFileRepo->findOneBy(array('file'=>$file, 'accessPoint'=>$this->accessPoint)),
+            );
+
+        }
+        
+        return $this->render('SlightScribeBundle:AdminProjectVersionAccessPointEdit:editFiles.html.twig', array(
+            'project' => $this->project,
+            'version' => $this->projectVersion,
+            'accessPoint' => $this->accessPoint,
+            'files' => $projectFiles,
+        ));
+    }
+
+
+
+
 }

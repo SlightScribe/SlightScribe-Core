@@ -93,4 +93,10 @@
         <p>No files</p>
     {% endif %}
 
+    <p>
+        <a href="{{  path('slight_scribe_admin_project_version_access_point_edit_files',{'projectId':project.publicId,'versionId':version.publicId,'accessPointId':accessPoint.publicId}) }}" class="btn btn-default">
+            Edit Files
+        </a>
+    </p>
+
 {% endblock %}

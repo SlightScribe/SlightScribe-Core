@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Table(name="access_point_has_file")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="SlightScribeBundle\Repository\AccessPointHasFileRepository")
  * @ORM\HasLifecycleCallbacks
  *  @license 3-clause BSD https://github.com/SlightScribe/SlightScribe-Core/blob/master/LICENSE.md
  *  @link https://github.com/SlightScribe/SlightScribe-Core
