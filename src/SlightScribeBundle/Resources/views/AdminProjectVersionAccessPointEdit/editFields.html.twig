@@ -1,0 +1,76 @@
+{#
+#  @license 3-clause BSD https://github.com/SlightScribe/SlightScribe-Core/blob/master/LICENSE.md
+#  @link https://github.com/SlightScribe/SlightScribe-Core
+#}
+
+
+{%  extends 'SlightScribeBundle::base.html.twig' %}
+
+{% block main %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('slight_scribe_admin_homepage') }}">Admin</a></li>
+        <li><a href="{{ path('slight_scribe_admin_project_show',{ 'projectId':project.publicId }) }}">Project: {{  project.titleAdmin }}</a></li>
+        <li><a href="{{ path('slight_scribe_admin_project_version_show',{ 'projectId':project.publicId,'versionId':version.publicId }) }}">Version: {{  version.titleAdmin }}</a></li>
+        <li><a href="{{ path('slight_scribe_admin_project_version_access_point_show',{ 'projectId':project.publicId,'versionId':version.publicId, 'accessPointId':accessPoint.publicId }) }}">Access Point: {{  accessPoint.titleAdmin }}</a></li>
+        <li class="active">Edit Fields</li>
+    </ol>
+
+    <h2>Project {{  project.titleAdmin }} Version {{  version.titleAdmin }} Access Point {{  accessPoint.titleAdmin }} Edit Fields</h2>
+
+
+    {% if fields %}
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Field</th>
+                <th>Title</th>
+                <th>Type</th>
+                <th>Added?</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for field in fields %}
+                <tr>
+                    <td>{{ field.field.publicId }}</td>
+                    <td>{{ field.field.titleAdmin }}</td>
+                    <td>
+                        {%  if field.field.isTypeText %}
+                            Text
+                        {%  elseif field.field.isTypeTextArea %}
+                            TextArea
+                        {%  endif %}
+                    </td>
+                    <td>
+                        {%  if field.isExisting %}
+                            Yes
+                        {%  else %}
+                            No
+                        {%  endif %}
+                    </td>
+                    <td class="action-link">
+                        {%  if field.isExisting %}
+                            <form method="post">
+                                <input type="hidden" name="action" value="remove">
+                                <input type="hidden" name="id" value="{{ field.field.publicId }}">
+                                <input type="submit" value="Remove Field">
+                            </form>
+                        {%  else %}
+                            <form method="post">
+                                <input type="hidden" name="action" value="add">
+                                <input type="hidden" name="id" value="{{ field.field.publicId }}">
+                                <input type="submit" value="Add Field">
+                            </form>
+                        {%  endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No fields</p>
+    {% endif %}
+
+
+{% endblock %}

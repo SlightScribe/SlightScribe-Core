@@ -55,6 +55,13 @@
         <p>No fields</p>
     {% endif %}
 
+
+    <p>
+        <a href="{{  path('slight_scribe_admin_project_version_access_point_edit_fields',{'projectId':project.publicId,'versionId':version.publicId,'accessPointId':accessPoint.publicId}) }}" class="btn btn-default">
+            Edit Fields
+        </a>
+    </p>
+
     {% if files %}
         <table class="table table-striped">
             <thead>

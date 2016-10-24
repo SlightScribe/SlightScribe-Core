@@ -58,6 +58,50 @@ class AdminProjectVersionAccessPointEditController extends AdminProjectVersionAc
     }
 
 
+    public function editFieldsAction($projectId, $versionId, $accessPointId, Request $request)
+    {
+        // build
+        $this->build($projectId, $versionId, $accessPointId);
+        //data
+
+        $doctrine = $this->getDoctrine()->getManager();
+
+
+        $projectFieldRepo = $doctrine->getRepository('SlightScribeBundle:Field');
+        $accessPointHasFieldRepo = $doctrine->getRepository('SlightScribeBundle:AccessPointHasField');
+
+        ## TODO CSFR protection
+        if ($request->request->get('action') == 'add') {
+            $field = $projectFieldRepo->findOneBy(array('project'=>$this->project, 'publicId'=> $request->request->get('id') ));
+            if ($field) {
+                $accessPointHasFieldRepo->addFieldToAccessPoint($field, $this->accessPoint);
+            }
+        } else if ($request->request->get('action') == 'remove') {
+            $field = $projectFieldRepo->findOneBy(array('project'=>$this->project, 'publicId'=> $request->request->get('id') ));
+            if ($field) {
+                $accessPointHasFieldRepo->removeFieldFromAccessPoint($field, $this->accessPoint);
+            }
+        }
+
+
+        $projectFields = array();
+        foreach($projectFieldRepo->findBy(array('project'=>$this->project)) as $field) {
+            $projectFields[] = array(
+                'field' => $field,
+                'isExisting' => $accessPointHasFieldRepo->findOneBy(array('field'=>$field, 'accessPoint'=>$this->accessPoint)),
+            );
+
+        }
+        
+        return $this->render('SlightScribeBundle:AdminProjectVersionAccessPointEdit:editFields.html.twig', array(
+            'project' => $this->project,
+            'version' => $this->projectVersion,
+            'accessPoint' => $this->accessPoint,
+            'fields' => $projectFields,
+        ));
+    }
+
+
 
 
 }

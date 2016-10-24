@@ -62,6 +62,10 @@ slight_scribe_admin_project_version_access_point_edit:
     path:     /admin/project/{projectId}/version/{versionId}/accesspoint/{accessPointId}/edit
     defaults: { _controller: SlightScribeBundle:AdminProjectVersionAccessPointEdit:edit }
 
+slight_scribe_admin_project_version_access_point_edit_fields:
+    path:     /admin/project/{projectId}/version/{versionId}/accesspoint/{accessPointId}/edit/fields
+    defaults: { _controller: SlightScribeBundle:AdminProjectVersionAccessPointEdit:editFields }
+
 slight_scribe_admin_project_version_runs_list:
     path:     /admin/project/{projectId}/version/{versionId}/run
     defaults: { _controller: SlightScribeBundle:AdminProjectVersion:runs }
