@@ -38,7 +38,7 @@ class AdminCommunicationEditType extends AbstractType
 
         $builder->add('emailContentHTMLTemplate', 'textarea', array(
             'required' => false,
-            'label'=>'Email Content - HTWL'
+            'label'=>'Email Content - HTML'
         ));
 
 
