@@ -31,7 +31,7 @@
                     <td>{{ blockEmail.emailClean }}</td>
                     <td>{{ blockEmail.startedAt | date('c')  }}</td>
                     <td>{%  if blockEmail.finishedAt  %}{{ blockEmail.finishedAt | date('c')  }}{%  else %}n/a{%  endif %}</td>
-                    <td class="action-link"></td>
+                    <td class="action-link"><a href="{{  path('slight_scribe_admin_block_email_show',{'blockId':blockEmail.id}) }}" class="btn btn-default">View</a></td>
                 </tr>
             {% endfor %}
             </tbody>

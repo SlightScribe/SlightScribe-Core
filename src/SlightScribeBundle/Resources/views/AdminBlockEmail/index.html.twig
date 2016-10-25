@@ -1,0 +1,32 @@
+{#
+#  @license 3-clause BSD https://github.com/SlightScribe/SlightScribe-Core/blob/master/LICENSE.md
+#  @link https://github.com/SlightScribe/SlightScribe-Core
+#}
+
+
+{%  extends 'SlightScribeBundle::base.html.twig' %}
+
+{% block main %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('slight_scribe_admin_homepage') }}">Admin</a></li>
+        <li class="active">Block Email: {{  blockEmail.email }} at {{ blockEmail.startedAt | date('c') }}</li>
+    </ol>
+
+    <h2>Block Email {{  blockEmail.email }} at {{ blockEmail.startedAt | date('c') }}</h2>
+
+
+    <p>Email</p>
+    <p>{{ blockEmail.email }}</p>
+
+    <p>Email (Cleaned)</p>
+    <p>{{ blockEmail.emailClean }}</p>
+
+    <p>Started</p>
+    <p>{{  blockEmail.startedAt | date('c')  }}</p>
+
+    <p>Finished</p>
+    <p>{%  if blockEmail.finishedAt  %}{{ blockEmail.finishedAt | date('c')  }}{%  else %}n/a{%  endif %}</p>
+
+
+{% endblock %}

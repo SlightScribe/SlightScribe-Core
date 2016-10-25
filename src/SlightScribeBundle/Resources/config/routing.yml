@@ -128,6 +128,10 @@ slight_scribe_admin_block_email_list:
     path:     /admin/block/email/
     defaults: { _controller: SlightScribeBundle:Admin:blockEmails }
 
+slight_scribe_admin_block_email_show:
+    path:     /admin/block/email/{blockId}
+    defaults: { _controller: SlightScribeBundle:AdminBlockEmail:index }
+
 
 ########################################### USER
 
