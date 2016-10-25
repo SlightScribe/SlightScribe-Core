@@ -39,7 +39,7 @@ class RunHasField {
 
 
     /**
-     * @ORM\Column(name="value", type="text", nullable=false)
+     * @ORM\Column(name="value", type="text", nullable=true)
      * @Assert\NotBlank()
      */
     private $value;
