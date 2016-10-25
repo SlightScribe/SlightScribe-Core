@@ -120,6 +120,10 @@ slight_scribe_admin_block_ip_list:
     path:     /admin/block/ip/
     defaults: { _controller: SlightScribeBundle:Admin:blockIPs }
 
+slight_scribe_admin_block_ip_show:
+    path:     /admin/block/ip/{blockId}
+    defaults: { _controller: SlightScribeBundle:AdminBlockIP:index }
+
 slight_scribe_admin_block_email_list:
     path:     /admin/block/email/
     defaults: { _controller: SlightScribeBundle:Admin:blockEmails }

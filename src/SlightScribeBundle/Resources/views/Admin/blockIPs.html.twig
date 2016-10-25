@@ -29,7 +29,7 @@
                     <td>{{ blockIP.ip }}</td>
                     <td>{{ blockIP.startedAt | date('c')  }}</td>
                     <td>{%  if blockIP.finishedAt  %}{{ blockIP.finishedAt | date('c')  }}{%  else %}n/a{%  endif %}</td>
-                    <td class="action-link"></td>
+                    <td class="action-link"><a href="{{  path('slight_scribe_admin_block_ip_show',{'blockId':blockIP.id}) }}" class="btn btn-default">View</a></td>
                 </tr>
             {% endfor %}
             </tbody>
