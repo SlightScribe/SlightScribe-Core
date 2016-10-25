@@ -49,6 +49,22 @@ class ProcessDataForBlocksTask
                 $doctrine->persist($blockIP);
                 $doctrine->flush($blockIP);
 
+                if ($this->container->hasParameter('on_block_notify_email')) {
+
+                    $fromEmail = $this->container->hasParameter('from_email') ? $this->container->getParameter('from_email') : 'hello@example.com';
+                    $fromEmailName = $this->container->hasParameter('from_email_name') ? $this->container->getParameter('from_email_name') : 'Hello';
+                    $installName = $this->container->hasParameter('router.request_context.host') ? $this->container->getParameter('router.request_context.host') : 'SlightScribe';
+
+                    $message = \Swift_Message::newInstance()
+                        ->setSubject('IP Address Block put in place on ' . $installName)
+                        ->setFrom(array($fromEmail => $fromEmailName))
+                        ->setTo($this->container->getParameter('on_block_notify_email'))
+                        ->setBody('IP Address block put in place.');
+
+                    $this->container->get('mailer')->send($message);
+
+                }
+
                 return true;
             }
         }
@@ -78,6 +94,23 @@ class ProcessDataForBlocksTask
                 $blockEmail->setEmailClean($emailCleaned);
                 $doctrine->persist($blockEmail);
                 $doctrine->flush($blockEmail);
+
+
+                if ($this->container->hasParameter('on_block_notify_email')) {
+
+                    $fromEmail = $this->container->hasParameter('from_email') ? $this->container->getParameter('from_email') : 'hello@example.com';
+                    $fromEmailName = $this->container->hasParameter('from_email_name') ? $this->container->getParameter('from_email_name') : 'Hello';
+                    $installName = $this->container->hasParameter('router.request_context.host') ? $this->container->getParameter('router.request_context.host') : 'SlightScribe';
+
+                    $message = \Swift_Message::newInstance()
+                        ->setSubject('Email Address Block put in place on ' . $installName)
+                        ->setFrom(array($fromEmail => $fromEmailName))
+                        ->setTo($this->container->getParameter('on_block_notify_email'))
+                        ->setBody('Email Address block put in place.');
+
+                    $this->container->get('mailer')->send($message);
+
+                }
 
                 return true;
             }

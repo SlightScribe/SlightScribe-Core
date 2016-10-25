@@ -31,3 +31,7 @@ parameters:
 
     from_email: hello@example.com
     from_email_name: Hello
+
+    on_block_notify_email: hello@example.com
+
+
