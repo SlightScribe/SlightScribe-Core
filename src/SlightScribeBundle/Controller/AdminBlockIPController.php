@@ -4,6 +4,7 @@ namespace SlightScribeBundle\Controller;
 
 use SlightScribeBundle\Entity\BlockIP;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  *  @license 3-clause BSD https://github.com/SlightScribe/SlightScribe-Core/blob/master/LICENSE.md
@@ -28,13 +29,20 @@ class AdminBlockIPController extends Controller
 
     }
 
-    public function indexAction($blockId)
+    public function indexAction($blockId, Request $request)
     {
         // build
         $this->build($blockId);
         //data
         $doctrine = $this->getDoctrine()->getManager();
 
+
+        // TODO CSFR
+        if ($request->request->get('action') == 'finish') {
+            $this->blockIP->setFinishedAt(new \DateTime());
+            $doctrine->persist($this->blockIP);
+            $doctrine->flush($this->blockIP);
+        }
 
 
 
