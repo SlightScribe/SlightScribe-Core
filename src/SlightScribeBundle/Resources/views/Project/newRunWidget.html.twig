@@ -1,0 +1,26 @@
+{#
+#  @license 3-clause BSD https://github.com/SlightScribe/SlightScribe-Core/blob/master/LICENSE.md
+#  @link https://github.com/SlightScribe/SlightScribe-Core
+#}
+<html>
+    <head>
+        <title>New Run Widget</title>
+    </head>
+    <body>
+
+        <div id="PlaceHere"></div>
+
+        {% javascripts '@jquery' '@slightscribe_normal_jquery_v1_js' %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+
+        <script>
+            var project;
+            $( document ).ready(function() {
+                project =  new SlightScribeNormalCreateRun('#PlaceHere', { 'projectId': '{{ project.publicId }}'}, {});
+                project.start();
+            });
+        </script>
+
+    </body>
+</html>

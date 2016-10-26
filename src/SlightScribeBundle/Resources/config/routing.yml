@@ -139,6 +139,10 @@ slight_scribe_project_run_create:
     path:     /project/{projectId}/run
     defaults: { _controller: SlightScribeBundle:Project:create }
 
+slight_scribe_project_run_create_widget:
+    path:     /project/{projectId}/runWidget
+    defaults: { _controller: SlightScribeBundle:Project:createWidget }
+
 
 slight_scribe_project_run_stop:
     path:     /project/{projectId}/stop/{runId}/{securityKey}
@@ -148,3 +152,26 @@ slight_scribe_project_run_stop:
 slight_scribe_project_run_file:
     path:     /project/{projectId}/file/{runId}/{securityKey}/{fileId}
     defaults: { _controller: SlightScribeBundle:ProjectRun:file }
+
+
+######################################################################## API 1
+
+questionkey_api_1_project_data_json:
+    pattern:  /api/v1/project/{projectId}/data.json
+    defaults: { _controller: SlightScribeBundle:API1Project:dataJSON }
+    methods:  [GET]
+
+questionkey_api_1_project_data_jsonp:
+    pattern:  /api/v1/project/{projectId}/data.jsonp
+    defaults: { _controller: SlightScribeBundle:API1Project:dataJSONP }
+    methods: [GET]
+
+questionkey_api_1_project_action_json:
+    pattern:  /api/v1/project/{projectId}/action.json
+    defaults: { _controller: SlightScribeBundle:API1Project:actionJSON }
+    methods:  [POST]
+
+questionkey_api_1_project_action_jsonp:
+    pattern:  /api/v1/project/{projectId}/action.jsonp
+    defaults: { _controller: SlightScribeBundle:API1Project:actionJSONP }
+    methods: [POST]

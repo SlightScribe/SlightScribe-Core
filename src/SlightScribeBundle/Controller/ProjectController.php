@@ -108,4 +108,14 @@ class ProjectController extends Controller
 
     }
 
+    public function createWidgetAction($projectId, Request $request)
+    {
+        $this->build($projectId, $request);
+
+        return $this->render('SlightScribeBundle:Project:newRunWidget.html.twig', array(
+            'project' => $this->project,
+        ));
+
+    }
+
 }
