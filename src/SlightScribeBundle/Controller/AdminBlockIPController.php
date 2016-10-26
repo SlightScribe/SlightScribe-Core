@@ -33,10 +33,19 @@ class AdminBlockIPController extends Controller
         // build
         $this->build($blockId);
         //data
+        $doctrine = $this->getDoctrine()->getManager();
+
+
+
+
+        $runRepo = $doctrine->getRepository('SlightScribeBundle:Run');
+        $runs = $runRepo->findBy(array('createdByIp' => $this->blockIP->getIp()));
+
 
 
         return $this->render('SlightScribeBundle:AdminBlockIP:index.html.twig', array(
             'blockIP' => $this->blockIP,
+            'runs' => $runs,
         ));
     }
 

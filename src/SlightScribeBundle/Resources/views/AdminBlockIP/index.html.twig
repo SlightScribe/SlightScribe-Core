@@ -26,4 +26,33 @@
     <p>{%  if blockIP.finishedAt  %}{{ blockIP.finishedAt | date('c')  }}{%  else %}n/a{%  endif %}</p>
 
 
+
+    {% if runs %}
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Run</th>
+                <th>Created At</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for run in runs %}
+                <tr>
+                    <td>{{ run.publicId }}</td>
+                    <td>{{ run.createdAt | date('c') }}</td>
+                    <td class="action-link">
+                        <a href="{{  path('slight_scribe_admin_project_version_run_show',{'projectId':run.project.publicId,'versionId':run.projectVersion.publicId,'runId':run.publicId}) }}" class="btn btn-default">
+                            View
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No runs</p>
+    {% endif %}
+
+
 {% endblock %}
