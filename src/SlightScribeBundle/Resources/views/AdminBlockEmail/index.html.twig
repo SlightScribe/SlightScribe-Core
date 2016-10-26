@@ -28,6 +28,13 @@
     <p>Finished</p>
     <p>{%  if blockEmail.finishedAt  %}{{ blockEmail.finishedAt | date('c')  }}{%  else %}n/a{%  endif %}</p>
 
+    {%  if not blockEmail.finishedAt  %}
+        <form method="post">
+            <input type="hidden" name="action" value="finish">
+            <input type="submit" value="Finish This Block Now">
+        </form>
+    {%  endif %}
+
     {% if runs %}
         <table class="table table-striped">
             <thead>
