@@ -34,9 +34,15 @@ class AdminBlockEmailController extends Controller
         $this->build($blockId);
         //data
 
+        $doctrine = $this->getDoctrine()->getManager();
+        $runRepo = $doctrine->getRepository('SlightScribeBundle:Run');
+        $runs = $runRepo->findBy(array('emailClean' => $this->blockEmail->getEmailClean()));
+
+
 
         return $this->render('SlightScribeBundle:AdminBlockEmail:index.html.twig', array(
             'blockEmail' => $this->blockEmail,
+            'runs' => $runs,
         ));
     }
 
