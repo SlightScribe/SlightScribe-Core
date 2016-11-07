@@ -52,9 +52,9 @@ class AccessPointFormTask
 
     public function getHTMLForField(Field $field) {
         if ($field->isTypeText()) {
-            return '<input type="text" name="field_'.$field->getPublicId().'">';
+            return '<input type="text" name="field_'.$field->getPublicId().'" class="field_type_text field_name_'.$field->getPublicId().'">';
         } else if ($field->isTypeTextArea()) {
-            return '<textarea name="field_'.$field->getPublicId().'"></textarea>';
+            return '<textarea name="field_'.$field->getPublicId().'" class="field_type_textarea field_name_'.$field->getPublicId().'"></textarea>';
         }
     }
 
