@@ -90,8 +90,16 @@ class Communication {
     private $emailSubjectTemplate;
 
 
+    /**
+     * @ORM\ManyToOne(targetEntity="SlightScribeBundle\Entity\Communication")
+     * @ORM\JoinColumn(name="from_old_version_id", referencedColumnName="id", nullable=true)
+     */
+    private $fromOldVersion;
+
+
 
     public function copyFromOld(Communication $communication) {
+        $this->fromOldVersion = $communication;
         $this->sequence = $communication->sequence;
         $this->publicId = $communication->publicId;
         $this->titleAdmin = $communication->titleAdmin;
@@ -246,6 +254,22 @@ class Communication {
     public function setPublicId($publicId)
     {
         $this->publicId = $publicId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFromOldVersion()
+    {
+        return $this->fromOldVersion;
+    }
+
+    /**
+     * @param mixed $fromOldVersion
+     */
+    public function setFromOldVersion($fromOldVersion)
+    {
+        $this->fromOldVersion = $fromOldVersion;
     }
 
 

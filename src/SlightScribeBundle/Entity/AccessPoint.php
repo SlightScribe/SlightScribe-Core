@@ -62,11 +62,19 @@ class AccessPoint
 
 
     /**
+     * @ORM\ManyToOne(targetEntity="SlightScribeBundle\Entity\AccessPoint")
+     * @ORM\JoinColumn(name="from_old_version_id", referencedColumnName="id", nullable=true)
+     */
+    private $fromOldVersion;
+
+
+    /**
      * @ORM\Column(name="form", type="text", nullable=true)
      */
     private $form;
 
     public function copyFromOld(AccessPoint $oldAccessPoint) {
+        $this->fromOldVersion = $oldAccessPoint;
         $this->publicId = $oldAccessPoint->publicId;
         $this->titleAdmin = $oldAccessPoint->titleAdmin;
         $this->form = $oldAccessPoint->form;
@@ -198,6 +206,22 @@ class AccessPoint
     public function setForm($form)
     {
         $this->form = $form;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFromOldVersion()
+    {
+        return $this->fromOldVersion;
+    }
+
+    /**
+     * @param mixed $fromOldVersion
+     */
+    public function setFromOldVersion($fromOldVersion)
+    {
+        $this->fromOldVersion = $fromOldVersion;
     }
 
 

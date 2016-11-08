@@ -75,6 +75,14 @@ class File {
     private $letterContentTemplate;
 
 
+
+    /**
+     * @ORM\ManyToOne(targetEntity="SlightScribeBundle\Entity\File")
+     * @ORM\JoinColumn(name="from_old_version_id", referencedColumnName="id", nullable=true)
+     */
+    private $fromOldVersion;
+
+
     /**
      * @ORM\OneToMany(targetEntity="SlightScribeBundle\Entity\CommunicationHasFile", mappedBy="file")
      */
@@ -87,6 +95,7 @@ class File {
     private $accessPointHasFiles;
 
     public function copyFromOld(File $file) {
+        $this->fromOldVersion = $file;
         $this->publicId = $file->publicId;;
         $this->titleAdmin = $file->titleAdmin;
         $this->filename = $file->filename;
@@ -239,9 +248,21 @@ class File {
         $this->type = $type;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getFromOldVersion()
+    {
+        return $this->fromOldVersion;
+    }
 
-
-
+    /**
+     * @param mixed $fromOldVersion
+     */
+    public function setFromOldVersion($fromOldVersion)
+    {
+        $this->fromOldVersion = $fromOldVersion;
+    }
 
     /**
      * @return datetime
