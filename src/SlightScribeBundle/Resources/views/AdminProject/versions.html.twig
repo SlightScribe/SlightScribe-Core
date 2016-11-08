@@ -22,12 +22,16 @@
             <tr>
                 <th>Version</th>
                 <th></th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
             {% for version in versions %}
                 <tr>
                     <td>{{ version.titleAdmin }}</td>
+                    <td>
+                        {%  if projectVersionPublished ==  version %}Published{%  endif %}
+                    </td>
                     <td class="action-link"><a href="{{  path('slight_scribe_admin_project_version_show',{'projectId':project.publicId,'versionId':version.publicId}) }}" class="btn btn-default">View</a></td>
                 </tr>
             {% endfor %}

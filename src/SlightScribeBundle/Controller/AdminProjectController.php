@@ -53,11 +53,15 @@ class AdminProjectController extends Controller
         $doctrine = $this->getDoctrine()->getManager();
         $projectVersionRepo = $doctrine->getRepository('SlightScribeBundle:ProjectVersion');
         $projectVersions = $projectVersionRepo->findBy(array('project'=>$this->project));
+        $projectVersionPublished = $projectVersionRepo->findPublishedVersionForProject($this->project);
+
+
 
 
         return $this->render('SlightScribeBundle:AdminProject:versions.html.twig', array(
             'project' => $this->project,
             'versions' => $projectVersions,
+            'projectVersionPublished' => $projectVersionPublished,
         ));
     }
 
