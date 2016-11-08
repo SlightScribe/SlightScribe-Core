@@ -45,9 +45,14 @@ class AdminProjectVersionController extends Controller
         // build
         $this->build($projectId, $versionId);
         //data
+        $doctrine = $this->getDoctrine()->getManager();
+        $projectVersionRepo = $doctrine->getRepository('SlightScribeBundle:ProjectVersion');
+        $projectVersionPublished = $projectVersionRepo->findPublishedVersionForProject($this->project);
+
         return $this->render('SlightScribeBundle:AdminProjectVersion:index.html.twig', array(
             'project' => $this->project,
             'version' => $this->projectVersion,
+            'isPublishedVersion'=>($projectVersionPublished ? $projectVersionPublished == $this->projectVersion : null),
         ));
     }
 
