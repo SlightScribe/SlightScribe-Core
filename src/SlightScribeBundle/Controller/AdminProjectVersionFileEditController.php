@@ -4,6 +4,7 @@ namespace SlightScribeBundle\Controller;
 
 use SlightScribeBundle\Entity\Project;
 use SlightScribeBundle\Form\Type\AdminFileEditType;
+use SlightScribeBundle\Security\ProjectVoter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -19,6 +20,7 @@ class AdminProjectVersionFileEditController extends AdminProjectVersionFileContr
     protected function build($projectId, $versionId, $fileId)
     {
         parent::build($projectId, $versionId, $fileId);
+        $this->denyAccessUnlessGranted(ProjectVoter::EDIT, $this->project);
 
     }
 

@@ -5,6 +5,7 @@ namespace SlightScribeBundle\Controller;
 use SlightScribeBundle\Entity\Communication;
 use SlightScribeBundle\Entity\Project;
 use SlightScribeBundle\Entity\ProjectCommunication;
+use SlightScribeBundle\Security\ProjectVoter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -35,7 +36,7 @@ class AdminProjectVersionCommunicationController extends Controller
         if (!$this->project) {
             throw new  NotFoundHttpException('Not found');
         }
-        // TODO security $this->denyAccessUnlessGranted(ProjectVoter::VIEW, $this->project);
+        $this->denyAccessUnlessGranted(ProjectVoter::VIEW, $this->project);
         // load
         $repository = $doctrine->getRepository('SlightScribeBundle:ProjectVersion');
         $this->projectVersion = $repository->findOneBy(array('project'=>$this->project, 'publicId'=>$versionId));

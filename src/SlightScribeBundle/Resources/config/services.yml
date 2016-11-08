@@ -7,3 +7,10 @@ services:
         class: SlightScribeBundle\EventListener\PrePersistEventListener
         tags:
             - { name: doctrine.event_listener, event: prePersist }
+
+    slightscribebundle.project_voter:
+        class: SlightScribeBundle\Security\ProjectVoter
+        tags:
+            - { name: security.voter }
+        # small performance boost
+        public: false

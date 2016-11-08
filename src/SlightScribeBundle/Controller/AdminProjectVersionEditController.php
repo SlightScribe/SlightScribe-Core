@@ -11,6 +11,7 @@ use SlightScribeBundle\Form\Type\AdminCommunicationNewType;
 use SlightScribeBundle\Form\Type\AdminFileNewType;
 use SlightScribeBundle\Form\Type\AdminProjectPublishType;
 use SlightScribeBundle\Form\Type\AdminProjectVersionNewType;
+use SlightScribeBundle\Security\ProjectVoter;
 use SlightScribeBundle\Task\CopyNewVersionOfTreeTask;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,6 +27,7 @@ class AdminProjectVersionEditController extends AdminProjectVersionController
     protected function build($projectId, $versionId)
     {
         parent::build($projectId, $versionId);
+        $this->denyAccessUnlessGranted(ProjectVoter::EDIT, $this->project);
     }
 
 

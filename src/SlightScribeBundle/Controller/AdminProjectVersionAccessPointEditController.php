@@ -4,6 +4,7 @@ namespace SlightScribeBundle\Controller;
 
 use SlightScribeBundle\Entity\Project;
 use SlightScribeBundle\Form\Type\AdminAccessPointEditType;
+use SlightScribeBundle\Security\ProjectVoter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -19,6 +20,7 @@ class AdminProjectVersionAccessPointEditController extends AdminProjectVersionAc
     protected function build($projectId, $versionId, $accessPointId)
     {
         parent::build($projectId, $versionId, $accessPointId);
+        $this->denyAccessUnlessGranted(ProjectVoter::EDIT, $this->project);
 
     }
 

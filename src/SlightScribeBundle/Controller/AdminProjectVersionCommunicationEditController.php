@@ -5,6 +5,7 @@ namespace SlightScribeBundle\Controller;
 use SlightScribeBundle\Entity\Project;
 use SlightScribeBundle\Entity\ProjectCommunication;
 use SlightScribeBundle\Form\Type\AdminCommunicationEditType;
+use SlightScribeBundle\Security\ProjectVoter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -20,6 +21,7 @@ class AdminProjectVersionCommunicationEditController extends AdminProjectVersion
     protected function build($projectId, $versionId, $communicationId)
     {
         parent::build($projectId, $versionId, $communicationId);
+        $this->denyAccessUnlessGranted(ProjectVoter::EDIT, $this->project);
 
     }
 

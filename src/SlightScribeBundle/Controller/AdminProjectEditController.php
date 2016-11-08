@@ -5,6 +5,7 @@ namespace SlightScribeBundle\Controller;
 use SlightScribeBundle\Entity\Field;
 use SlightScribeBundle\Entity\Project;
 use SlightScribeBundle\Form\Type\AdminFieldNewType;
+use SlightScribeBundle\Security\ProjectVoter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
@@ -17,6 +18,7 @@ class AdminProjectEditController extends AdminProjectController
     protected function build($projectId)
     {
        parent::build($projectId);
+        $this->denyAccessUnlessGranted(ProjectVoter::EDIT, $this->project);
     }
 
     public function newFieldTextAction($projectId) {
