@@ -51,7 +51,7 @@ class Communication {
 
 
     /**
-     * @ORM\Column(name="public_id", type="string", length=250, unique=true, nullable=false)
+     * @ORM\Column(name="public_id", type="string", length=250, unique=false, nullable=false)
      * @Assert\NotBlank()
      */
     private $publicId;
@@ -88,6 +88,19 @@ class Communication {
      * @ORM\Column(name="email_subject_template", type="text", nullable=true)
      */
     private $emailSubjectTemplate;
+
+
+
+    public function copyFromOld(Communication $communication) {
+        $this->sequence = $communication->sequence;
+        $this->publicId = $communication->publicId;
+        $this->titleAdmin = $communication->titleAdmin;
+        $this->days_before = $communication->days_before;
+        $this->emailContentTextTemplate = $communication->emailContentTextTemplate;
+        $this->emailContentHTMLTemplate = $communication->emailContentHTMLTemplate;
+        $this->emailSubjectTemplate = $communication->emailSubjectTemplate;
+    }
+
 
     /**
      * @return int

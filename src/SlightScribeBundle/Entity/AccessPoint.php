@@ -66,6 +66,12 @@ class AccessPoint
      */
     private $form;
 
+    public function copyFromOld(AccessPoint $oldAccessPoint) {
+        $this->publicId = $oldAccessPoint->publicId;
+        $this->titleAdmin = $oldAccessPoint->titleAdmin;
+        $this->form = $oldAccessPoint->form;
+    }
+
     /**
      * @return int
      */

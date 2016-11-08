@@ -41,7 +41,7 @@ class File {
 
 
     /**
-     * @ORM\Column(name="public_id", type="string", length=250, unique=true, nullable=false)
+     * @ORM\Column(name="public_id", type="string", length=250, unique=false, nullable=false)
      * @Assert\NotBlank()
      */
     private $publicId;
@@ -86,6 +86,13 @@ class File {
      */
     private $accessPointHasFiles;
 
+    public function copyFromOld(File $file) {
+        $this->publicId = $file->publicId;;
+        $this->titleAdmin = $file->titleAdmin;
+        $this->filename = $file->filename;
+        $this->type = $file->type;
+        $this->letterContentTemplate = $file->letterContentTemplate;
+    }
 
     /**
      * @return int

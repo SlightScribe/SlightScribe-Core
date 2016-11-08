@@ -23,6 +23,7 @@
         <li class="list-group-item"><a href="{{  path('slight_scribe_admin_project_version_files_list',{'projectId':project.publicId,'versionId':version.publicId}) }}" class="btn btn-default">Files</a></li>
         <li class="list-group-item"><a href="{{ path('slight_scribe_admin_project_version_new_file',{'projectId':project.publicId,'versionId':version.publicId}) }}" class="btn btn-warning">File - New</a></li>
         <li class="list-group-item"><a href="{{  path('slight_scribe_admin_project_version_runs_list',{'projectId':project.publicId,'versionId':version.publicId}) }}" class="btn btn-default">Runs</a></li>
+        <li class="list-group-item"><a href="{{  path('slight_scribe_admin_project_version_new_version',{'projectId':project.publicId,'versionId':version.publicId}) }}" class="btn btn-warning">New Version</a></li>
     </ul>
 
 {% endblock %}

@@ -5,8 +5,11 @@ namespace SlightScribeBundle\Controller;
 use SlightScribeBundle\Entity\Communication;
 use SlightScribeBundle\Entity\File;
 use SlightScribeBundle\Entity\Project;
+use SlightScribeBundle\Entity\ProjectVersion;
 use SlightScribeBundle\Form\Type\AdminCommunicationNewType;
 use SlightScribeBundle\Form\Type\AdminFileNewType;
+use SlightScribeBundle\Form\Type\AdminProjectVersionNewType;
+use SlightScribeBundle\Task\CopyNewVersionOfTreeTask;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -95,6 +98,44 @@ class AdminProjectVersionEditController extends AdminProjectVersionController
             'version' => $this->projectVersion,
             'form' => $form->createView(),
         ));
+    }
+
+    public function newVersionAction($projectId, $versionId, Request $request) {
+
+        // build
+        $this->build($projectId, $versionId);
+        //data
+
+        $doctrine = $this->getDoctrine()->getManager();
+
+        $newProjectVersion = new ProjectVersion();
+        $newProjectVersion->setProject($this->project);
+        $newProjectVersion->setFromOldVersion($this->projectVersion);
+
+        $form = $this->createForm(new AdminProjectVersionNewType(), $newProjectVersion);
+
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                $doctrine->persist($newProjectVersion);
+                $doctrine->flush($newProjectVersion);
+
+                $task = new CopyNewVersionOfTreeTask($this->container, $this->projectVersion, $newProjectVersion);
+                $task->go();
+
+                return $this->redirect($this->generateUrl('slight_scribe_admin_project_version_show', array(
+                    'projectId' => $this->project->getPublicId(),
+                    'versionId' => $newProjectVersion->getPublicId(),
+                )));
+            }
+        }
+
+        return $this->render('SlightScribeBundle:AdminProjectVersionEdit:newVersion.html.twig', array(
+            'project' => $this->project,
+            'version' => $this->projectVersion,
+            'form' => $form->createView(),
+        ));
+
     }
 
 

@@ -61,6 +61,14 @@ class ProjectVersion {
      */
     private $redirectUserToAfterManualStop;
 
+
+    /**
+     * @ORM\ManyToOne(targetEntity="SlightScribeBundle\Entity\ProjectVersion")
+     * @ORM\JoinColumn(name="from_old_version_id", referencedColumnName="id", nullable=true)
+     */
+    private $fromOldVersion;
+
+
     /**
      * @return int
      */
@@ -143,17 +151,21 @@ class ProjectVersion {
         $this->redirectUserToAfterManualStop = $redirectUserToAfterManualStop;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getFromOldVersion()
+    {
+        return $this->fromOldVersion;
+    }
 
-
-
-
-
-
-
-
-
-
-
+    /**
+     * @param mixed $fromOldVersion
+     */
+    public function setFromOldVersion($fromOldVersion)
+    {
+        $this->fromOldVersion = $fromOldVersion;
+    }
 
     /**
      * @return datetime
