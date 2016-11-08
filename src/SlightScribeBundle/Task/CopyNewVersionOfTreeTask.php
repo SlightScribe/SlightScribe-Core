@@ -3,10 +3,14 @@
 namespace SlightScribeBundle\Task;
 
 use SlightScribeBundle\Entity\AccessPoint;
+use SlightScribeBundle\Entity\AccessPointHasField;
+use SlightScribeBundle\Entity\AccessPointHasFile;
 use SlightScribeBundle\Entity\Communication;
+use SlightScribeBundle\Entity\CommunicationHasFile;
 use SlightScribeBundle\Entity\Field;
 use SlightScribeBundle\Entity\File;
 use SlightScribeBundle\Entity\ProjectVersion;
+use SlightScribeBundle\Entity\ProjectVersionHasDefaultAccessPoint;
 use SlightScribeBundle\Entity\RunCommunicationAttachment;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -62,6 +66,15 @@ class CopyNewVersionOfTreeTask
             $doctrine->persist($communications[$oldCommunication->getPublicId()]);
             $doctrine->flush($communications[$oldCommunication->getPublicId()]);
 
+            foreach($doctrine->getRepository('SlightScribeBundle:CommunicationHasFile')->findBy(array('communication'=>$oldCommunication)) as $oldCommunicatonHasFile) {
+
+                $communicationHasFile = new CommunicationHasFile();
+                $communicationHasFile->setFile($oldCommunicatonHasFile->getFile());
+                $communicationHasFile->setCommunication($communications[$oldCommunication->getPublicId()]);
+                $doctrine->persist($communicationHasFile);
+                $doctrine->flush($communicationHasFile);
+
+            }
         }
 
         $accessPoints = array();
@@ -74,18 +87,39 @@ class CopyNewVersionOfTreeTask
             $doctrine->persist($accessPoints[$oldAccessPoint->getPublicId()]);
             $doctrine->flush($accessPoints[$oldAccessPoint->getPublicId()]);
 
+
+            foreach($doctrine->getRepository('SlightScribeBundle:AccessPointHasField')->findBy(array('accessPoint'=>$oldAccessPoint)) as $oldAccessPointHasField) {
+
+                $accessPointHasField = new AccessPointHasField();
+                $accessPointHasField->setField($oldAccessPointHasField->getField());
+                $accessPointHasField->setAccessPoint($accessPoints[$oldAccessPoint->getPublicId()]);
+                $doctrine->persist($accessPointHasField);
+                $doctrine->flush($accessPointHasField);
+
+            }
+
+            foreach($doctrine->getRepository('SlightScribeBundle:AccessPointHasFile')->findBy(array('accessPoint'=>$oldAccessPoint)) as $oldAccessPointHasFile) {
+
+                $accessPointHasFile = new AccessPointHasFile();
+                $accessPointHasFile->setFile($oldAccessPointHasFile->getFile());
+                $accessPointHasFile->setAccessPoint($accessPoints[$oldAccessPoint->getPublicId()]);
+                $doctrine->persist($accessPointHasFile);
+                $doctrine->flush($accessPointHasFile);
+
+            }
+
         }
 
-        // TODO AccessPointHasField
+        $oldProjectVersionHasDefaultAccessPoint = $doctrine->getRepository('SlightScribeBundle:ProjectVersionHasDefaultAccessPoint')->findOneBy(array('projectVersion'=>$this->oldVersion));
+        if ($oldProjectVersionHasDefaultAccessPoint) {
 
-        // TODO AccessPointHasFile
+            $projectVersionHasDefaultAccessPoint = new ProjectVersionHasDefaultAccessPoint();
+            $projectVersionHasDefaultAccessPoint->setProjectVersion($this->newVersion);
+            $projectVersionHasDefaultAccessPoint->setAccessPoint($accessPoints[$oldProjectVersionHasDefaultAccessPoint->getAccessPoint()->getPublicId()]);
+            $doctrine->persist($projectVersionHasDefaultAccessPoint);
+            $doctrine->flush($projectVersionHasDefaultAccessPoint);
 
-        // TODO CommunicationHasFile
-
-        // TODO ProjectVersionHasDefaultAccessPoint
-
-
-
+        }
 
     }
 

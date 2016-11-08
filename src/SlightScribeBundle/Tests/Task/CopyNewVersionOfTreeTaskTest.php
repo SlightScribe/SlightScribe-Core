@@ -6,10 +6,15 @@ namespace SlightScribeBundle\Tests\Repository;
 
 
 use SlightScribeBundle\Entity\AccessPoint;
+use SlightScribeBundle\Entity\AccessPointHasField;
+use SlightScribeBundle\Entity\AccessPointHasFile;
 use SlightScribeBundle\Entity\Communication;
+use SlightScribeBundle\Entity\CommunicationHasFile;
+use SlightScribeBundle\Entity\Field;
 use SlightScribeBundle\Entity\File;
 use SlightScribeBundle\Entity\Project;
 use SlightScribeBundle\Entity\ProjectVersion;
+use SlightScribeBundle\Entity\ProjectVersionHasDefaultAccessPoint;
 use SlightScribeBundle\Entity\User;
 use SlightScribeBundle\Task\CopyNewVersionOfTreeTask;
 use SlightScribeBundle\Tests\BaseTestWithDataBase;
@@ -39,6 +44,15 @@ class CopyNewVersionOfTreeTaskTest extends BaseTestWithDataBase
         $project->setPublicId('test');
         $project->setOwner($user);
         $this->em->persist($project);
+
+        $field = new Field();
+        $field->setProject($project);
+        $field->setPublicId('f1');
+        $field->setType(Field::TYPE_TEXT);
+        $field->setTitleAdmin('field1');
+        $field->setLabel('Field1');
+        $field->setDescription('This is the first field');
+        $this->em->persist($field);
 
         $oldProjectVersion = new ProjectVersion();
         $oldProjectVersion->setProject($project);
@@ -74,8 +88,30 @@ class CopyNewVersionOfTreeTaskTest extends BaseTestWithDataBase
         $newProjectVersion->setFromOldVersion($oldProjectVersion);
         $this->em->persist($newProjectVersion);
 
+        $this->em->flush();
+
+        $accessPointHasField = new AccessPointHasField();
+        $accessPointHasField->setAccessPoint($accessPoint);
+        $accessPointHasField->setField($field);
+        $this->em->persist($accessPointHasField);
+
+        $accessPointHasFile = new AccessPointHasFile();
+        $accessPointHasFile->setAccessPoint($accessPoint);
+        $accessPointHasFile->setFile($file);
+        $this->em->persist($accessPointHasFile);
+
+        $communicationHasFile = new CommunicationHasFile();
+        $communicationHasFile->setCommunication($communication);
+        $communicationHasFile->setFile($file);
+        $this->em->persist($communicationHasFile);
+
+        $projectVersionHasDefaultAccessPoint = new ProjectVersionHasDefaultAccessPoint();
+        $projectVersionHasDefaultAccessPoint->setProjectVersion($oldProjectVersion);
+        $projectVersionHasDefaultAccessPoint->setAccessPoint($accessPoint);
+        $this->em->persist($projectVersionHasDefaultAccessPoint);
 
         $this->em->flush();
+
 
         $task = new CopyNewVersionOfTreeTask($this->container, $oldProjectVersion, $newProjectVersion);
         $task->go();
@@ -93,6 +129,22 @@ class CopyNewVersionOfTreeTaskTest extends BaseTestWithDataBase
 
         $accessPoints = $this->em->getRepository('SlightScribeBundle:AccessPoint')->findBy(array('projectVersion'=>$newProjectVersion));
         $this->assertEquals(1, count($accessPoints));
+
+
+        $accessPointHasFields = $this->em->getRepository('SlightScribeBundle:AccessPointHasField')->findBy(array('field'=>$field));
+        $this->assertEquals(2, count($accessPointHasFields));
+
+
+        $accessPointHasFiles = $this->em->getRepository('SlightScribeBundle:AccessPointHasFile')->findBy(array('file'=>$file));
+        $this->assertEquals(2, count($accessPointHasFiles));
+
+        $communicationHasFiles = $this->em->getRepository('SlightScribeBundle:CommunicationHasFile')->findBy(array('file'=>$file));
+        $this->assertEquals(2, count($communicationHasFiles));
+
+
+        $communicationHasFiles = $this->em->getRepository('SlightScribeBundle:ProjectVersionHasDefaultAccessPoint')->findBy(array('projectVersion'=>$newProjectVersion));
+        $this->assertEquals(1, count($communicationHasFiles));
+
 
 
 
