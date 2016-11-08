@@ -1,0 +1,36 @@
+{#
+#  @license 3-clause BSD https://github.com/SlightScribe/SlightScribe-Core/blob/master/LICENSE.md
+#  @link https://github.com/SlightScribe/SlightScribe-Core
+#}
+
+
+{%  extends 'SlightScribeBundle::base.html.twig' %}
+
+{% block main %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('slight_scribe_admin_homepage') }}">Admin</a></li>
+        <li><a href="{{ path('slight_scribe_admin_project_show',{ 'projectId':project.publicId }) }}">Project: {{  project.titleAdmin }}</a></li>
+        <li><a href="{{ path('slight_scribe_admin_project_version_show',{ 'projectId':project.publicId,'versionId':version.publicId }) }}">Version: {{  version.titleAdmin }}</a></li>
+        <li class="active">Publish</li>
+    </ol>
+
+    <h2>Project {{  project.titleAdmin }} Version {{  version.titleAdmin }} Publish</h2>
+
+
+    <form class="styled" action="" method="post" {{ form_enctype(form) }} id="NewTreeForm">
+        {{ form_errors(form) }}
+
+        <div>
+            {{ form_row(form.commentPublishedAdmin) }}
+        </div>
+
+        {{ form_rest(form) }}
+
+        <input type="submit" value="Publish" />
+
+        <div class="cancel"><a href="{{ path('slight_scribe_admin_project_version_show',{ 'projectId':project.publicId,'versionId':version.publicId }) }}">Cancel</a></div>
+    </form>
+
+
+{% endblock %}

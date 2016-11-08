@@ -33,7 +33,7 @@
                 <tr>
                     <td>{{ projectVersionPublished.projectVersion.titleAdmin }}</td>
                     <td>{{ projectVersionPublished.publishedAt |date("F jS \\a\\t g:ia") }}</td>
-                    <td>{% if projectVersionPublished.publishedBy  %}{{ treeVersionPublished.publishedBy.email }}{% endif %}</td>
+                    <td>{% if projectVersionPublished.publishedBy  %}{{ projectVersionPublished.publishedBy.email }}{% endif %}</td>
                     <td>{{ projectVersionPublished.commentPublishedAdmin }}</td>
                     <td class="action-link"><a href="{{ path('slight_scribe_admin_project_version_show', {'projectId':project.publicId ,'versionId':projectVersionPublished.projectVersion.publicId }) }}" class="btn btn-default">View Version</a></td>
                 </tr>
