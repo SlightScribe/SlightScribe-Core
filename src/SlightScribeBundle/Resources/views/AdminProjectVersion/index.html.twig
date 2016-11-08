@@ -16,6 +16,12 @@
 
     <h2>Project {{  project.titleAdmin }} Version {{  version.titleAdmin }}</h2>
 
+    {%  if version.fromOldVersion %}
+        <p>
+            Created from old version:
+            <a href="{{ path('slight_scribe_admin_project_version_show',{ 'projectId':project.publicId,'versionId':version.fromOldVersion.publicId }) }}">{{  version.fromOldVersion.titleAdmin }}</a></li>
+        </p>
+    {%  endif %}
 
     {% if isPublishedVersion %}
         <p>
