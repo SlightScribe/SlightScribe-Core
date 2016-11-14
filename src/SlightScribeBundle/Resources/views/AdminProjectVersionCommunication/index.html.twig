@@ -20,23 +20,23 @@
     <p>
         Email Subject Template:
     </p>
-    <p>
+    <div class="templateContents">
         {{ communication.emailSubjectTemplate   }}
-    </p>
+    </div>
 
     <p>
         Email Content HTML Template:
     </p>
-    <p>
-        {{ communication.emailContentHTMLTemplate   }}
-    </p>
+    <div class="templateContents">
+        {{ communication.emailContentHTMLTemplate | nl2br  }}
+    </div>
 
     <p>
         Email Content Text Template:
     </p>
-    <p>
-        {{ communication.emailContentTextTemplate   }}
-    </p>
+    <div class="templateContents">
+        {{ communication.emailContentTextTemplate | nl2br  }}
+    </div>
 
     <a href="{{  path('slight_scribe_admin_project_version_communication_edit',{'projectId':project.publicId,'versionId':version.publicId,'communicationId':communication.publicId}) }}" class="btn btn-default">Edit</a>
 

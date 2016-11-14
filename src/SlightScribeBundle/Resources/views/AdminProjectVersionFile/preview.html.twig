@@ -19,6 +19,14 @@
     <h2>Project {{  project.titleAdmin }} Version {{  version.titleAdmin }} File {{  file.titleAdmin }} Preview</h2>
 
 
+    <h3>Template</h3>
+
+    <div class="templateContents">
+        {{ file.letterContentTemplate | nl2br  }}
+    </div>
+
+    <h3>Dummy data</h3>
+
     <form method="post">
         <ul>
             {%  for field in fields %}{% set name = 'field_' ~ field.publicId %}
@@ -34,6 +42,8 @@
         </ul>
         <input type="submit" value="See Preview" class="btn btn-default">
     </form>
+
+    <h3>Preview</h3>
 
     <div class="templatePreview">
         {{ filePreviewContents | nl2br }}
