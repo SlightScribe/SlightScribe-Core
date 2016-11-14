@@ -3,8 +3,12 @@
 namespace SlightScribeBundle\Controller;
 
 use SlightScribeBundle\Entity\Project;
+use SlightScribeBundle\Entity\Run;
+use SlightScribeBundle\Entity\RunHasField;
 use SlightScribeBundle\Security\ProjectVoter;
+use SlightScribeBundle\Task\GetFileTemplateContentsTask;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -59,6 +63,39 @@ class AdminProjectVersionFileController extends Controller
             'project' => $this->project,
             'version' => $this->projectVersion,
             'file' => $this->file,
+        ));
+    }
+
+
+
+    public function previewAction($projectId, $versionId, $fileId, Request $request)
+    {
+        // build
+        $this->build($projectId, $versionId, $fileId);
+        //data
+        $doctrine = $this->getDoctrine()->getManager();
+
+        $run = new Run();
+
+        $projectRunFields = array();
+        $fields = $doctrine->getRepository('SlightScribeBundle:Field')->findBy(array('project'=>$this->project));
+        foreach($fields as $field) {
+            $runHasField =  new RunHasField();
+            $runHasField->setField($field);
+            $runHasField->setValue($request->request->has('field_'.$field->getPublicId()) ? $request->request->get('field_'.$field->getPublicId()): '');
+            $projectRunFields[] = $runHasField;
+        }
+
+        $task = new GetFileTemplateContentsTask($this->container);
+        $templateContents = $task->get($run, $this->file, $projectRunFields);
+
+
+        return $this->render('SlightScribeBundle:AdminProjectVersionFile:preview.html.twig', array(
+            'project' => $this->project,
+            'version' => $this->projectVersion,
+            'file' => $this->file,
+            'filePreviewContents' => $templateContents,
+            'fields' => $fields,
         ));
     }
 

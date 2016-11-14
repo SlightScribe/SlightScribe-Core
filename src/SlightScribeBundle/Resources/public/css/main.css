@@ -13,3 +13,13 @@
 form .cancel {
     text-align: right;
 }
+
+
+.templatePreview {
+    margin: 10px 0;
+    border: 1px solid black;
+    padding: 20px;
+    background: #EEEEEE;
+}
+
+

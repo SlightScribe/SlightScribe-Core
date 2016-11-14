@@ -23,6 +23,8 @@ class CreateAndSaveProjectRunFileTask
 
     protected $container;
 
+    protected $getFileTemplateContentsTask;
+
     /**
      * CreateLetterChainInstanceTask constructor.
      * @param $container
@@ -31,6 +33,7 @@ class CreateAndSaveProjectRunFileTask
     {
         $this->container = $container;
 
+        $this->getFileTemplateContentsTask = new GetFileTemplateContentsTask($container);
     }
 
     public function createAndSave(Run $run, File $file, $save = true ) {
@@ -38,23 +41,14 @@ class CreateAndSaveProjectRunFileTask
 
         $doctrine = $this->container->get('doctrine')->getManager();
 
-        $twigVariables = array(
-            'projectRun' => $run,
-            'fields' => array(),
-        );
-
-        foreach($doctrine->getRepository('SlightScribeBundle:RunHasField')->findBy(array('run'=>$run)) as $projectRunField) {
-            $twigVariables['fields'][$projectRunField->getField()->getPublicId()] = $projectRunField->getValue();
-        }
-
+        $projectRunFields = $doctrine->getRepository('SlightScribeBundle:RunHasField')->findBy(array('run'=>$run));
 
         $runFile = new RunHasFile();
         $runFile->setRun($run);
         $runFile->setFile($file);
         $runFile->setFilename($file->getFilename());
 
-        $runFile->setLetterContent($this->container->get('twig')->createTemplate($file->getLetterContentTemplate())->render($twigVariables));
-
+        $runFile->setLetterContent($this->getFileTemplateContentsTask->get($run, $file, $projectRunFields));
 
         if ($save) {
             $doctrine->persist($runFile);

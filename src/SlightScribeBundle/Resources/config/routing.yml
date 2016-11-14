@@ -113,6 +113,10 @@ slight_scribe_admin_project_version_file_edit:
     path:     /admin/project/{projectId}/version/{versionId}/file/{fileId}/edit
     defaults: { _controller: SlightScribeBundle:AdminProjectVersionFileEdit:edit }
 
+slight_scribe_admin_project_version_file_preview:
+    path:     /admin/project/{projectId}/version/{versionId}/file/{fileId}/preview
+    defaults: { _controller: SlightScribeBundle:AdminProjectVersionFileEdit:preview }
+
 slight_scribe_admin_project_fields_list:
     path:     /admin/project/{projectId}/fields
     defaults: { _controller: SlightScribeBundle:AdminProject:fields }
