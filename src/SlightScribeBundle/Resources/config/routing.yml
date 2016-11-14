@@ -65,6 +65,10 @@ slight_scribe_admin_project_version_communication_edit:
     path:     /admin/project/{projectId}/version/{versionId}/communication/{communicationId}/edit
     defaults: { _controller: SlightScribeBundle:AdminProjectVersionCommunicationEdit:edit }
 
+slight_scribe_admin_project_version_communication_preview:
+    path:     /admin/project/{projectId}/version/{versionId}/communication/{communicationId}/preview
+    defaults: { _controller: SlightScribeBundle:AdminProjectVersionCommunicationEdit:preview }
+
 slight_scribe_admin_project_version_communication_edit_files:
     path:     /admin/project/{projectId}/version/{versionId}/communication/{communicationId}/edit/files
     defaults: { _controller: SlightScribeBundle:AdminProjectVersionCommunicationEdit:editFiles }

@@ -24,6 +24,12 @@ class CreateAndSendProjectRunCommunicationTask
     /** @var  MakeFileTask */
     protected $makeFileTask;
 
+    /** @var  GetCommunicationTemplatesTask */
+    protected $getCommunicationTemplatesTask;
+
+    /** @var  GetFileTemplateContentsTask */
+    protected $getFileTemplateContentsTask;
+
     /**
      * CreateLetterChainInstanceTask constructor.
      * @param $container
@@ -33,6 +39,9 @@ class CreateAndSendProjectRunCommunicationTask
         $this->container = $container;
 
         $this->makeFileTask = new MakeFileTask($container);
+
+        $this->getCommunicationTemplatesTask = new GetCommunicationTemplatesTask($container);
+        $this->getFileTemplateContentsTask = new GetFileTemplateContentsTask($container);
     }
 
     public function createAndSend(Run $run, Communication $communication) {
@@ -97,25 +106,13 @@ class CreateAndSendProjectRunCommunicationTask
         $runCommunication->setRun($run);
         $runCommunication->setCommunication($communication);
 
-        $stopURL = $this->container->get('router')->generate('slight_scribe_project_run_stop', array(
-                'projectId' => $run->getProject()->getPublicId(),
-                'runId' => $run->getPublicId(),
-                'securityKey' => $run->getSecurityKey()
-            ), UrlGeneratorInterface::ABSOLUTE_URL);
+        $projectRunFields = $doctrine->getRepository('SlightScribeBundle:RunHasField')->findBy(array('run'=>$run));
 
-        $twigVariables = array(
-            'projectRun' => $run,
-            'fields' => array(),
-            'stop_url' => $stopURL,
-        );
+        $return = $this->getCommunicationTemplatesTask->get($run, $communication, $projectRunFields);
 
-        foreach($doctrine->getRepository('SlightScribeBundle:RunHasField')->findBy(array('run'=>$run)) as $projectRunField) {
-            $twigVariables['fields'][$projectRunField->getField()->getPublicId()] = $projectRunField->getValue();
-        }
-
-        $runCommunication->setEmailSubject($this->container->get('twig')->createTemplate($communication->getEmailSubjectTemplate())->render($twigVariables));
-        $runCommunication->setEmailContentText($this->container->get('twig')->createTemplate($communication->getEmailContentTextTemplate())->render($twigVariables));
-        $runCommunication->setEmailContentHTML($this->container->get('twig')->createTemplate($communication->getEmailContentHTMLTemplate())->render($twigVariables));
+        $runCommunication->setEmailSubject($return['subject']);
+        $runCommunication->setEmailContentText($return['text']);
+        $runCommunication->setEmailContentHTML($return['html']);
 
         $runCommunicationFiles = array();
 
@@ -127,7 +124,7 @@ class CreateAndSendProjectRunCommunicationTask
             $runCommunicationFile->setFile($file);
 
             $runCommunicationFile->setFilename($file->getFilename());
-            $runCommunicationFile->setLetterContent($this->container->get('twig')->createTemplate($file->getLetterContentTemplate())->render($twigVariables));
+            $runCommunicationFile->setLetterContent($this->getFileTemplateContentsTask->get($run, $file, $projectRunFields));
 
             $runCommunicationFiles[] = $runCommunicationFile;
         }

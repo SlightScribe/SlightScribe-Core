@@ -5,8 +5,12 @@ namespace SlightScribeBundle\Controller;
 use SlightScribeBundle\Entity\Communication;
 use SlightScribeBundle\Entity\Project;
 use SlightScribeBundle\Entity\ProjectCommunication;
+use SlightScribeBundle\Entity\Run;
+use SlightScribeBundle\Entity\RunHasField;
 use SlightScribeBundle\Security\ProjectVoter;
+use SlightScribeBundle\Task\GetCommunicationTemplatesTask;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -70,7 +74,41 @@ class AdminProjectVersionCommunicationController extends Controller
         ));
     }
 
+    public function previewAction($projectId, $versionId, $communicationId, Request $request)
+    {
+        // build
+        $this->build($projectId, $versionId, $communicationId);
+        //data
+        $doctrine = $this->getDoctrine()->getManager();
 
+        $run = new Run();
+        $run->setProject($this->project);
+        $run->setPublicId('enf7vecgine0omkrlo2capruwre0buzstoi6salaea2phred');
+        $run->setSecurityKey('sym7mytpey0unkcoum6atfakabu8gavaoy0morhu');
+
+        $projectRunFields = array();
+        $fields = $doctrine->getRepository('SlightScribeBundle:Field')->findBy(array('project'=>$this->project));
+        foreach($fields as $field) {
+            $runHasField =  new RunHasField();
+            $runHasField->setField($field);
+            $runHasField->setValue($request->request->has('field_'.$field->getPublicId()) ? $request->request->get('field_'.$field->getPublicId()): '');
+            $projectRunFields[] = $runHasField;
+        }
+
+        $task = new GetCommunicationTemplatesTask($this->container);
+        $templates = $task->get($run, $this->communication, $projectRunFields);
+
+
+        return $this->render('SlightScribeBundle:AdminProjectVersionCommunication:preview.html.twig', array(
+            'project' => $this->project,
+            'version' => $this->projectVersion,
+            'communication' => $this->communication,
+            'fields' => $fields,
+            'communicationPreviewSubject' => $templates['subject'],
+            'filePreviewContentsHTML' => $templates['html'],
+            'filePreviewContentsText' => $templates['text'],
+        ));
+    }
 
 
 

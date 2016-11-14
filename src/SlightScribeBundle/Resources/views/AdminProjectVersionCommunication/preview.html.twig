@@ -1,0 +1,85 @@
+{#
+#  @license 3-clause BSD https://github.com/SlightScribe/SlightScribe-Core/blob/master/LICENSE.md
+#  @link https://github.com/SlightScribe/SlightScribe-Core
+#}
+
+
+{%  extends 'SlightScribeBundle::base.html.twig' %}
+
+{% block main %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('slight_scribe_admin_homepage') }}">Admin</a></li>
+        <li><a href="{{ path('slight_scribe_admin_project_show',{ 'projectId':project.publicId }) }}">Project: {{  project.titleAdmin }}</a></li>
+        <li><a href="{{ path('slight_scribe_admin_project_version_show',{ 'projectId':project.publicId,'versionId':version.publicId }) }}">Version: {{  version.titleAdmin }}</a></li>
+        <li><a href="{{ path('slight_scribe_admin_project_version_communication_show',{'projectId':project.publicId,'versionId':version.publicId,'communicationId':communication.publicId}) }}">Communication: {{  communication.titleAdmin }}</a></li>
+        <li class="active">Preview</li>
+    </ol>
+
+    <h2>Project {{  project.titleAdmin }} Version {{  version.titleAdmin }} Communication {{  communication.titleAdmin }} Preview</h2>
+
+    <h3>Templates</h3>
+
+    <p>
+        Email Subject Template:
+    </p>
+    <div class="templateContents">
+        {{ communication.emailSubjectTemplate   }}
+    </div>
+
+    <p>
+        Email Content HTML Template:
+    </p>
+    <div class="templateContents">
+        {{ communication.emailContentHTMLTemplate | nl2br  }}
+    </div>
+
+    <p>
+        Email Content Text Template:
+    </p>
+    <div class="templateContents">
+        {{ communication.emailContentTextTemplate | nl2br  }}
+    </div>
+
+    <h3>Dummy data</h3>
+
+    <form method="post">
+        <ul>
+            {%  for field in fields %}{% set name = 'field_' ~ field.publicId %}
+                <li>
+                    {{  field.titleAdmin }} ({{ field.publicId }}):
+                    {% if field.isTypeText %}
+                        <input type="text" name="{{ name }}" value="{{ app.request.request.get(name) }}">
+                    {%  elseif field.isTypeTextArea %}
+                        <textarea name="{{ name }}" >{{ app.request.request.get(name) }}</textarea>
+                    {%  endif %}
+                </li>
+            {%  endfor %}
+        </ul>
+        <input type="submit" value="See Preview" class="btn btn-default">
+    </form>
+
+    <h3>Preview</h3>
+
+    <p>
+        Email Subject Template:
+    </p>
+    <div class="templatePreview">
+        {{ communicationPreviewSubject | nl2br }}
+    </div>
+
+    <p>
+        Email Content HTML Template:
+    </p>
+    <div class="templatePreview">
+        {{ filePreviewContentsHTML | nl2br }}
+    </div>
+
+    <p>
+        Email Content Text Template:
+    </p>
+    <div class="templatePreview">
+        {{ filePreviewContentsText | nl2br }}
+    </div>
+
+{% endblock %}
