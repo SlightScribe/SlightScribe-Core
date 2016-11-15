@@ -36,6 +36,8 @@
                             Text
                         {%  elseif field.isTypeTextArea %}
                             TextArea
+                        {%  elseif field.isTypeDate %}
+                            Date
                         {%  endif %}
                     </td>
                     <td class="action-link"></td>

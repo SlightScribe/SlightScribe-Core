@@ -57,7 +57,7 @@ class API1ProjectController extends Controller
         foreach($fields as $field) {
             $data['fields'][] = array(
                 'id' => $field->getPublicId(),
-                'type' => ($field->isTypeText() ? 'text' : ($field->isTypeTextArea() ? 'textarea' : 'unknown')),
+                'type' => ($field->isTypeText() ? 'text' : ($field->isTypeTextArea() ? 'textarea' : ($field->isTypeDate() ? 'date' : 'unknown'))),
             );
         }
 

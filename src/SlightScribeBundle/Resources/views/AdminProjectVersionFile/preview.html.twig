@@ -34,6 +34,8 @@
                     {{  field.titleAdmin }} ({{ field.publicId }}):
                     {% if field.isTypeText %}
                         <input type="text" name="{{ name }}" value="{{ app.request.request.get(name) }}">
+                    {%  elseif field.isTypeDate %}
+                        <input type="text" name="{{ name }}" value="{{ app.request.request.get(name) }}">
                     {%  elseif field.isTypeTextArea %}
                         <textarea name="{{ name }}" >{{ app.request.request.get(name) }}</textarea>
                     {%  endif %}

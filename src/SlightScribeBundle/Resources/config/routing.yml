@@ -133,6 +133,10 @@ slight_scribe_admin_project_new_field_textarea:
     path:     /admin/project/{projectId}/newfield/textarea
     defaults: { _controller: SlightScribeBundle:AdminProjectEdit:newFieldTextArea }
 
+slight_scribe_admin_project_new_field_date:
+    path:     /admin/project/{projectId}/newfield/date
+    defaults: { _controller: SlightScribeBundle:AdminProjectEdit:newFieldDate }
+
 slight_scribe_admin_block_ip_list:
     path:     /admin/block/ip/
     defaults: { _controller: SlightScribeBundle:Admin:blockIPs }

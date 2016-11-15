@@ -81,4 +81,35 @@ class AdminProjectEditController extends AdminProjectController
 
     }
 
+
+    public function newFieldDateAction($projectId) {
+
+        $this->build($projectId);
+
+        $doctrine = $this->getDoctrine()->getManager();
+
+        $field = new Field();
+        $field->setProject($this->project);
+        $field->setType(Field::TYPE_DATE);
+
+        $form = $this->createForm(new AdminFieldNewType(), $field);
+        $request = $this->getRequest();
+
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                $doctrine->persist($field);
+                $doctrine->flush();
+
+                return $this->redirect($this->generateUrl('slight_scribe_admin_project_fields_list', array('projectId'=>$this->project->getPublicId())));
+            }
+        }
+
+        return $this->render('SlightScribeBundle:AdminProjectEdit:newFieldDate.html.twig', array(
+            'project' => $this->project,
+            'form' => $form->createView(),
+        ));
+
+    }
+
 }

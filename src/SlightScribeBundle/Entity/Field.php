@@ -47,6 +47,7 @@ class Field {
 
     const TYPE_TEXT = "TEXT";
     const TYPE_TEXTAREA = "TEXTAREA";
+    const TYPE_DATE = "DATE";
 
 
     /**
@@ -136,6 +137,10 @@ class Field {
 
     public function isTypeTextArea() {
         return strtolower($this->type) == strtolower(self::TYPE_TEXTAREA);
+    }
+
+    public function isTypeDate() {
+        return strtolower($this->type) == strtolower(self::TYPE_DATE);
     }
 
     /**
