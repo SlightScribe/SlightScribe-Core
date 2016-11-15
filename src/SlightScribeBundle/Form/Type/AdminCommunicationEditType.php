@@ -41,6 +41,15 @@ class AdminCommunicationEditType extends AbstractType
             'label'=>'Email Content - HTML'
         ));
 
+        $builder->add('sequence', 'integer', array(
+            'required' => false,
+            'label'=>'Sequence'
+        ));
+
+        $builder->add('daysBefore', 'integer', array(
+            'required' => false,
+            'label'=>'Days Before'
+        ));
 
     }
 

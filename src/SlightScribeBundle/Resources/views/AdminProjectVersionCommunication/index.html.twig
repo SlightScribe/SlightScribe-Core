@@ -38,6 +38,20 @@
         {{ communication.emailContentTextTemplate | nl2br  }}
     </div>
 
+    <p>
+        Sequence:
+    </p>
+    <p>
+        {{ communication.sequence   }}
+    </p>
+
+    <p>
+        Days Before:
+    </p>
+    <p>
+        {{ communication.daysBefore   }}
+    </p>
+
     <a href="{{  path('slight_scribe_admin_project_version_communication_preview',{'projectId':project.publicId,'versionId':version.publicId,'communicationId':communication.publicId}) }}" class="btn btn-default">Preview</a>
     <a href="{{  path('slight_scribe_admin_project_version_communication_edit',{'projectId':project.publicId,'versionId':version.publicId,'communicationId':communication.publicId}) }}" class="btn btn-default">Edit</a>
 
