@@ -38,7 +38,7 @@ class SendFurtherCommunicationsCommand extends ContainerAwareCommand
             $output->writeln("Project Run " . $projectRun->getPublicId());
 
             // Get last communication sent
-            $lastRunCommunication = $doctrine->getRepository('SlightScribeBundle:RunCommunication')->getLastForRun($projectRun);
+            $lastRunCommunication = $doctrine->getRepository('SlightScribeBundle:RunHasCommunication')->getLastForRun($projectRun);
 
             // Get next communication
             $nextCommunication =  $doctrine->getRepository('SlightScribeBundle:Communication')->getNextAfter($lastRunCommunication->getCommunication());
