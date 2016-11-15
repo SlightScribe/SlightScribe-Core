@@ -27,6 +27,12 @@ class IsFurtherCommunicationReadyToSendTask {
 
     public function go(Communication $nextCommunication, RunHasCommunication $lastRunCommunication) {
 
+        // This should never really be needed - if the lastRunCommunication wasn't actually sent, something in the caller should catch it.
+        // Have this as a final catch.
+        if (is_null($lastRunCommunication->getSentAt())) {
+            return false;
+        }
+
         $secondsDifference = abs($this->now->getTimestamp() - $lastRunCommunication->getSentAt()->getTimestamp());
 
         return $secondsDifference / (60*60*24) > $nextCommunication->getDaysBefore();
