@@ -108,7 +108,9 @@ class CreateAndSendProjectRunCommunicationTask
 
         $projectRunFields = $doctrine->getRepository('SlightScribeBundle:RunHasField')->findBy(array('run'=>$run));
 
-        $return = $this->getCommunicationTemplatesTask->get($run, $communication, $projectRunFields);
+        $runCommunications = $doctrine->getRepository('SlightScribeBundle:RunHasCommunication')->findBy(array('run'=>$run));
+
+        $return = $this->getCommunicationTemplatesTask->get($run, $communication, $projectRunFields, $runCommunications);
 
         $runCommunication->setEmailSubject($return['subject']);
         $runCommunication->setEmailContentText($return['text']);

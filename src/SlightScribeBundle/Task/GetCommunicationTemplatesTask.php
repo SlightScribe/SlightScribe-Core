@@ -31,7 +31,7 @@ class GetCommunicationTemplatesTask {
 
     }
 
-    public function get(Run $run, Communication $communication, $projectRunFields=array()) {
+    public function get(Run $run, Communication $communication, $projectRunFields=array(), $previousRunHasCommunications=array()) {
 
         $stopURL = $this->container->get('router')->generate('slight_scribe_project_run_stop', array(
             'projectId' => $run->getProject()->getPublicId(),
@@ -43,10 +43,17 @@ class GetCommunicationTemplatesTask {
             'projectRun' => $run,
             'fields' => array(),
             'stop_url' => $stopURL,
+            'previousCommunications' => array(),
         );
 
         foreach($projectRunFields as $projectRunField) {
             $twigVariables['fields'][$projectRunField->getField()->getPublicId()] = $projectRunField->getValue();
+        }
+
+        foreach($previousRunHasCommunications as $previousRunHasCommunication) {
+            $twigVariables['previousCommunications'][$previousRunHasCommunication->getCommunication()->getPublicId()] = array(
+                'created_at' => $previousRunHasCommunication->getCreatedAt(),
+            );
         }
 
         $return = array();

@@ -95,8 +95,11 @@ class AdminProjectVersionCommunicationController extends Controller
             $projectRunFields[] = $runHasField;
         }
 
+        // For now just passing blank. Maybe have options for user to set things in here later?
+        $previousRunHasCommunications = array();
+
         $task = new GetCommunicationTemplatesTask($this->container);
-        $templates = $task->get($run, $this->communication, $projectRunFields);
+        $templates = $task->get($run, $this->communication, $projectRunFields, $previousRunHasCommunications);
 
 
         return $this->render('SlightScribeBundle:AdminProjectVersionCommunication:preview.html.twig', array(
