@@ -125,3 +125,12 @@ assetic:
             inputs:
                 - '@SlightScribeBundle/Resources/public/js/external/normal-jquery-v1.js'
             output: "js/external/normal-jquery-v1.js"
+
+doctrine_migrations:
+    dir_name: "%kernel.root_dir%/DoctrineMigrations"
+    namespace: Application\Migrations
+    table_name: migration_versions
+    name: Application Migrations
+
+
+

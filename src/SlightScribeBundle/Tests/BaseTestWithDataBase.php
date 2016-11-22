@@ -44,9 +44,8 @@ abstract class BaseTestWithDataBase extends WebTestCase
         $this->application->run(new StringInput('doctrine:schema:drop --force --quiet'));
 
 
-        //$this->application->run(new StringInput('doctrine:migrations:version  --no-interaction --delete --all --quiet'));
-        //$this->application->run(new StringInput('doctrine:migrations:migrate --no-interaction --quiet'));
-        $this->application->run(new StringInput('doctrine:schema:update --force --quiet'));
+        $this->application->run(new StringInput('doctrine:migrations:version  --no-interaction --delete --all --quiet'));
+        $this->application->run(new StringInput('doctrine:migrations:migrate --no-interaction --quiet'));
 
 
     }
