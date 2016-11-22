@@ -30,7 +30,7 @@ class AdminFieldNewType extends AbstractType
         ));
 
         $builder->add('description', 'text', array(
-            'required' => true,
+            'required' => false,
             'label'=>'Description'
         ));
 
