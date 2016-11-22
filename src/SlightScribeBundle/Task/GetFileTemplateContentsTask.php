@@ -30,15 +30,22 @@ class GetFileTemplateContentsTask {
 
     }
 
-    public function get(Run $run, File $file, $projectRunFields=array()) {
+    public function get(Run $run, File $file, $projectRunFields=array(), $previousRunHasCommunications=array()) {
 
         $twigVariables = array(
             'projectRun' => $run,
             'fields' => array(),
+            'previousCommunications' => array(),
         );
 
         foreach($projectRunFields as $projectRunField) {
             $twigVariables['fields'][$projectRunField->getField()->getPublicId()] = $projectRunField->getValue();
+        }
+
+        foreach($previousRunHasCommunications as $previousRunHasCommunication) {
+            $twigVariables['previousCommunications'][$previousRunHasCommunication->getCommunication()->getPublicId()] = array(
+                'created_at' => $previousRunHasCommunication->getCreatedAt(),
+            );
         }
 
         return $this->container->get('twig')->createTemplate($file->getLetterContentTemplate())->render($twigVariables);

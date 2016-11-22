@@ -41,6 +41,8 @@ class CreateAndSaveProjectRunFileTask
 
         $doctrine = $this->container->get('doctrine')->getManager();
 
+        $runCommunications = $doctrine->getRepository('SlightScribeBundle:RunHasCommunication')->findBy(array('run'=>$run));
+
         $projectRunFields = $doctrine->getRepository('SlightScribeBundle:RunHasField')->findBy(array('run'=>$run));
 
         $runFile = new RunHasFile();
@@ -48,7 +50,7 @@ class CreateAndSaveProjectRunFileTask
         $runFile->setFile($file);
         $runFile->setFilename($file->getFilename());
 
-        $runFile->setLetterContent($this->getFileTemplateContentsTask->get($run, $file, $projectRunFields));
+        $runFile->setLetterContent($this->getFileTemplateContentsTask->get($run, $file, $projectRunFields, $runCommunications));
 
         if ($save) {
             $doctrine->persist($runFile);

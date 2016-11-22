@@ -128,7 +128,7 @@ class CreateAndSendProjectRunCommunicationTask
             $runCommunicationFile->setFile($file);
 
             $runCommunicationFile->setFilename($file->getFilename());
-            $runCommunicationFile->setLetterContent($this->getFileTemplateContentsTask->get($run, $file, $projectRunFields));
+            $runCommunicationFile->setLetterContent($this->getFileTemplateContentsTask->get($run, $file, $projectRunFields, $runCommunications));
 
             $runCommunicationFiles[] = $runCommunicationFile;
         }
