@@ -52,11 +52,11 @@ class AccessPointFormTask
 
     public function getHTMLForField(Field $field) {
         if ($field->isTypeText()) {
-            return '<input type="text" name="field_'.$field->getPublicId().'" class="field_type_text field_name_'.$field->getPublicId().'">';
+            return '<input type="text" name="field_'.$field->getPublicId().'" class="field_type_text field_name_'.$field->getPublicId().'" placeholder="'.htmlspecialchars($field->getLabel(), ENT_QUOTES).'">';
         } else if ($field->isTypeDate()) {
-            return '<input type="text" name="field_'.$field->getPublicId().'" class="field_type_text field_name_'.$field->getPublicId().'">';
+            return '<input type="text" name="field_'.$field->getPublicId().'" class="field_type_text field_name_'.$field->getPublicId().'" placeholder="'.htmlspecialchars($field->getLabel(), ENT_QUOTES).'">';
         } else if ($field->isTypeTextArea()) {
-            return '<textarea name="field_'.$field->getPublicId().'" class="field_type_textarea field_name_'.$field->getPublicId().'"></textarea>';
+            return '<textarea name="field_'.$field->getPublicId().'" class="field_type_textarea field_name_'.$field->getPublicId().'" placeholder="'.htmlspecialchars($field->getLabel(), ENT_QUOTES).'"></textarea>';
         }
     }
 
