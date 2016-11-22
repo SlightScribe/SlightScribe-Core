@@ -59,9 +59,11 @@ class CreateAndSendProjectRunCommunicationTask
             ->setSubject($runCommunication->getEmailSubject())
             ->setFrom(array($fromEmail => $fromEmailName))
             ->setTo($run->getEmail())
-            ->setBody($runCommunication->getEmailContentText())
-            ->addPart($runCommunication->getEmailContentHTML(),'text/html');
+            ->setBody($runCommunication->getEmailContentText());
 
+        if ($runCommunication->getEmailContentHTML()) {
+            $message->addPart($runCommunication->getEmailContentHTML(),'text/html');
+        }
 
         $tmpFileNames = array();
         foreach($runCommunicationFiles as $runCommunicationFile) {

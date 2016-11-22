@@ -60,7 +60,8 @@ class GetCommunicationTemplatesTask {
 
         $return['subject'] = $this->container->get('twig')->createTemplate($communication->getEmailSubjectTemplate())->render($twigVariables);
         $return['text'] = $this->container->get('twig')->createTemplate($communication->getEmailContentTextTemplate())->render($twigVariables);
-        $return['html'] = $this->container->get('twig')->createTemplate($communication->getEmailContentHTMLTemplate())->render($twigVariables);
+        // HTML template is optional.
+        $return['html'] = $communication->getEmailContentHTMLTemplate() ? $this->container->get('twig')->createTemplate($communication->getEmailContentHTMLTemplate())->render($twigVariables) : null;
 
         return $return;
 
