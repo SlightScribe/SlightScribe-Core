@@ -76,6 +76,8 @@ class AdminProjectVersionFileController extends Controller
         $doctrine = $this->getDoctrine()->getManager();
 
         $run = new Run();
+        // Set created At in case template wants to reference it.
+        $run->setCreatedAt(new \DateTime());
 
         $projectRunFields = array();
         $fields = $doctrine->getRepository('SlightScribeBundle:Field')->findBy(array('project'=>$this->project));
