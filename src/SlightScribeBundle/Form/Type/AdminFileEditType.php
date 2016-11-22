@@ -29,6 +29,12 @@ class AdminFileEditType extends AbstractType
             'label'=>'Letter Content'
         ));
 
+        $builder->add('filename', 'text', array(
+            'required' => true,
+            'label'=>'Filename'
+        ));
+
+
     }
 
     public function getName() {
