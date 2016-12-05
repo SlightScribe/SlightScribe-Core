@@ -5,6 +5,7 @@ namespace SlightScribeBundle\Task;
 
 use SlightScribeBundle\Entity\AccessPoint;
 use SlightScribeBundle\Entity\Communication;
+use SlightScribeBundle\Entity\CommunicationTemplateError;
 use SlightScribeBundle\Entity\Field;
 use SlightScribeBundle\Entity\File;
 use SlightScribeBundle\Entity\Run;
@@ -58,12 +59,36 @@ class GetCommunicationTemplatesTask {
 
         $return = array();
 
-        $return['subject'] = $this->container->get('twig')->createTemplate($communication->getEmailSubjectTemplate())->render($twigVariables);
-        $return['text'] = $this->container->get('twig')->createTemplate($communication->getEmailContentTextTemplate())->render($twigVariables);
-        // HTML template is optional.
-        $return['html'] = $communication->getEmailContentHTMLTemplate() ? $this->container->get('twig')->createTemplate($communication->getEmailContentHTMLTemplate())->render($twigVariables) : null;
+        try {
+            $return['subject'] = $this->container->get('twig')->createTemplate($communication->getEmailSubjectTemplate())->render($twigVariables);
+            $return['text'] = $this->container->get('twig')->createTemplate($communication->getEmailContentTextTemplate())->render($twigVariables);
+            // HTML template is optional.
+            $return['html'] = $communication->getEmailContentHTMLTemplate() ? $this->container->get('twig')->createTemplate($communication->getEmailContentHTMLTemplate())->render($twigVariables) : null;
 
-        return $return;
+            return $return;
+        } catch (\Twig_Error $e) {
+
+            if ($communication->getId()) {
+                // The if statement just checks Communication is already saved - might not be, in which case we don't save.
+                $communicationTemplateError = new CommunicationTemplateError();
+                $communicationTemplateError->setCommunication($communication);
+                // We might have been passed a dummy run, in which case don't save it.
+                $communicationTemplateError->setRun($run->getId() ? $run : null);
+                $communicationTemplateError->setEmailSubjectTemplate($communication->getEmailSubjectTemplate());
+                $communicationTemplateError->setEmailContentHTMLTemplate($communication->getEmailContentHTMLTemplate());
+                $communicationTemplateError->setEmailContentTextTemplate($communication->getEmailContentTextTemplate());
+                $communicationTemplateError->setTwigVariables(json_encode($twigVariables, 0, 3));
+                $communicationTemplateError->setErrorCode($e->getCode());
+                $communicationTemplateError->setErrorFile($e->getFile());
+                $communicationTemplateError->setErrorLine($e->getLine());
+                $communicationTemplateError->setErrorMessage($e->getMessage());
+                $doctrine = $this->container->get('doctrine')->getManager();
+                $doctrine->persist($communicationTemplateError);
+                $doctrine->flush($communicationTemplateError);
+            }
+
+            throw $e;
+        }
 
     }
 
