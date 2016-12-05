@@ -47,8 +47,15 @@
 
     <h3>Preview</h3>
 
-    <div class="templatePreview">
-        {{ filePreviewContents | nl2br }}
-    </div>
+    {%  if filePreviewError %}
+        <div class="templatePreview">
+            <p>There was an ERROR!</p>
+            <p>{{ filePreviewError.message  }}</p>
+        </div>
+    {%  else %}
+        <div class="templatePreview">
+            {{ filePreviewContents | nl2br }}
+        </div>
+    {%  endif %}
 
 {% endblock %}

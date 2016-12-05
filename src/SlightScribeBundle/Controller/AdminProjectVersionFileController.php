@@ -89,14 +89,22 @@ class AdminProjectVersionFileController extends Controller
         }
 
         $task = new GetFileTemplateContentsTask($this->container);
-        $templateContents = $task->get($run, $this->file, $projectRunFields);
-
+        $templateContents = "";
+        $templateError = null;
+        try {
+            $templateContents = $task->get($run, $this->file, $projectRunFields);
+        } catch (\Exception $e) {
+            $templateError = array(
+                'message' => $e->getMessage(),
+            );
+        }
 
         return $this->render('SlightScribeBundle:AdminProjectVersionFile:preview.html.twig', array(
             'project' => $this->project,
             'version' => $this->projectVersion,
             'file' => $this->file,
             'filePreviewContents' => $templateContents,
+            'filePreviewError' => $templateError,
             'fields' => $fields,
         ));
     }
