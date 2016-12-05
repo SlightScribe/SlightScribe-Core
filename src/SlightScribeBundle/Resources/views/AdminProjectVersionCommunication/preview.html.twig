@@ -63,25 +63,34 @@
 
     <h3>Preview</h3>
 
-    <p>
-        Email Subject Template:
-    </p>
-    <div class="templatePreview">
-        {{ communicationPreviewSubject | nl2br }}
-    </div>
+    {%  if templatesError %}
+        <div class="templatePreview">
+            <p>There was an ERROR!</p>
+            <p>{{ templatesError.message  }}</p>
+        </div>
+    {%  else %}
+        <p>
+            Email Subject Template:
+        </p>
+        <div class="templatePreview">
+            {{ communicationPreviewSubject | nl2br }}
+        </div>
 
-    <p>
-        Email Content HTML Template:
-    </p>
-    <div class="templatePreview">
-        {{ filePreviewContentsHTML | nl2br }}
-    </div>
+        <p>
+            Email Content HTML Template:
+        </p>
+        <div class="templatePreview">
+            {{ filePreviewContentsHTML | nl2br }}
+        </div>
 
-    <p>
-        Email Content Text Template:
-    </p>
-    <div class="templatePreview">
-        {{ filePreviewContentsText | nl2br }}
-    </div>
+        <p>
+            Email Content Text Template:
+        </p>
+        <div class="templatePreview">
+            {{ filePreviewContentsText | nl2br }}
+        </div>
+    {%  endif %}
+
+
 
 {% endblock %}

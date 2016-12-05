@@ -99,8 +99,15 @@ class AdminProjectVersionCommunicationController extends Controller
         $previousRunHasCommunications = array();
 
         $task = new GetCommunicationTemplatesTask($this->container);
-        $templates = $task->get($run, $this->communication, $projectRunFields, $previousRunHasCommunications);
-
+        $templates = null;
+        $templateError = null;
+        try {
+            $templates = $task->get($run, $this->communication, $projectRunFields, $previousRunHasCommunications);
+        } catch (\Exception $e) {
+            $templateError = array(
+                'message' => $e->getMessage(),
+            );
+        }
 
         return $this->render('SlightScribeBundle:AdminProjectVersionCommunication:preview.html.twig', array(
             'project' => $this->project,
@@ -110,6 +117,7 @@ class AdminProjectVersionCommunicationController extends Controller
             'communicationPreviewSubject' => $templates['subject'],
             'filePreviewContentsHTML' => $templates['html'],
             'filePreviewContentsText' => $templates['text'],
+            'templatesError' => $templateError,
         ));
     }
 
