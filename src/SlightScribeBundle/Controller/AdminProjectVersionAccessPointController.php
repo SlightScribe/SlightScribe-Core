@@ -59,12 +59,18 @@ class AdminProjectVersionAccessPointController extends Controller
         //data
 
         $doctrine = $this->getDoctrine()->getManager();
+        $accessPointHasFieldRepository = $doctrine->getRepository('SlightScribeBundle:AccessPointHasField');
 
         $repo = $doctrine->getRepository('SlightScribeBundle:File');
         $files = $repo->findForAccessPoint($this->accessPoint);
 
-
-        $fields = $doctrine->getRepository('SlightScribeBundle:Field')->getForAccessPoint($this->accessPoint);
+        $fields = array();
+        foreach($doctrine->getRepository('SlightScribeBundle:Field')->getForAccessPoint($this->accessPoint) as $field) {
+            $fields[] = array(
+                'field'=>$field,
+                'isRequired'=>$accessPointHasFieldRepository->findOneBy(array('field'=>$field,'accessPoint'=>$this->accessPoint))->getIsRequired(),
+            );
+        }
 
         return $this->render('SlightScribeBundle:AdminProjectVersionAccessPoint:index.html.twig', array(
             'project' => $this->project,

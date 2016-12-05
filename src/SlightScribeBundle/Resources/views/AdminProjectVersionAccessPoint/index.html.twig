@@ -38,14 +38,16 @@
             <tr>
                 <th>Field</th>
                 <th>Title</th>
+                <tH>Required?</tH>
                 <th></th>
             </tr>
             </thead>
             <tbody>
             {% for field in fields %}
                 <tr>
-                    <td>{{ field.publicId }}</td>
-                    <td>{{ field.titleAdmin }}</td>
+                    <td>{{ field.field.publicId }}</td>
+                    <td>{{ field.field.titleAdmin }}</td>
+                    <td>{% if field.isRequired %}Required!{%  else %}Optional{%  endif %}</td>
                     <td class="action-link"></td>
                 </tr>
             {% endfor %}

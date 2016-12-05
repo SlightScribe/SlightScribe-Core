@@ -77,11 +77,23 @@ class RunHasField {
     }
 
     /**
-     * @return mixed
+     * @return boolean
      */
-
-
-
+    public function  hasValue() {
+        if ($this->field && $this->field->isTypeDate()) {
+            // need to catch this special case or it goes to current date.
+            if (!$this->value) {
+                return false;
+            }
+            try {
+                $date = new \DateTime($this->value);
+                return $date->getTimestamp() > (new \DateTime('1950-01-01'))->getTimestamp();
+            } catch (\Exception $e) {
+                return false;
+            }
+        }
+        return (boolean)$this->value;
+    }
 
     /**
      * @return mixed

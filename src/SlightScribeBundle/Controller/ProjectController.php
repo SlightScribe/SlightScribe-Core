@@ -44,6 +44,7 @@ class ProjectController extends Controller
         $this->build($projectId, $request);
 
         $doctrine = $this->getDoctrine()->getManager();
+        $accessPointHasFieldRepository = $doctrine->getRepository('SlightScribeBundle:AccessPointHasField');
 
         $projectVersion = $doctrine->getRepository('SlightScribeBundle:ProjectVersion')->findPublishedVersionForProject($this->project);
 
@@ -56,6 +57,8 @@ class ProjectController extends Controller
 
         if ($request->getMethod() == 'POST' && $request->request->get('action') == 'new') {
 
+            // ############## USER HAS SUBMITTED, CHECK IT!
+
             $email = $request->request->get('email');
 
             $processBlocksForDataTask = new ProcessDataForBlocksTask($this->container);
@@ -63,47 +66,77 @@ class ProjectController extends Controller
                 throw new  NotFoundHttpException('Access Denied');
             }
 
-            // Actually Save!
-            $run = new Run();
-            $run->setProject($this->project);
-            $run->setProjectVersion($projectVersion);
-            $run->setEmail($email);
-            $run->setCreatedByIp($request->getClientIp());
-            $doctrine->persist($run);
-            $doctrine->flush($run);
+            $hasErrors = false;
 
-            $runUsedAccessPoint = new RunUsedAccessPoint();
-            $runUsedAccessPoint->setAccessPoint($accessPoint);
-            $runUsedAccessPoint->setRun($run);
-            $doctrine->persist($runUsedAccessPoint);
-            $doctrine->flush($runUsedAccessPoint);
-
+            $fieldsData = array();
             foreach($fields as $field) {
                 $runField = new RunHasField();
                 $runField->setField($field);
-                $runField->setRun($run);
                 $runField->setValue($request->request->get('field_'. $field->getPublicId()));
-                $doctrine->persist($runField);
-                $doctrine->flush($runField);
+                if ($accessPointHasFieldRepository->findOneBy(array('field'=>$field,'accessPoint'=>$accessPoint))->getIsRequired() && !$runField->hasValue()) {
+                    $hasErrors = true;
+                }
+                $fieldsData[$field->getPublicId()] = $runField;
             }
 
-            $doctrine->flush();
+            if (!$hasErrors) {
 
-            $files = $doctrine->getRepository('SlightScribeBundle:File')->findForAccessPoint($accessPoint);
+                // ############## USER HAS SUBMITTED WITH NO ERRORS, SAVE!
+                $run = new Run();
+                $run->setProject($this->project);
+                $run->setProjectVersion($projectVersion);
+                $run->setEmail($email);
+                $run->setCreatedByIp($request->getClientIp());
+                $doctrine->persist($run);
+                $doctrine->flush($run);
 
-            return $this->render('SlightScribeBundle:Project:newRun.done.html.twig', array(
-                'project' => $this->project,
-                'projectVersion' => $projectVersion,
-                'run' => $run,
-                'files' => $files,
-            ));
+                $runUsedAccessPoint = new RunUsedAccessPoint();
+                $runUsedAccessPoint->setAccessPoint($accessPoint);
+                $runUsedAccessPoint->setRun($run);
+                $doctrine->persist($runUsedAccessPoint);
+                $doctrine->flush($runUsedAccessPoint);
+
+                foreach ($fieldsData as $fieldData) {
+                    $fieldData->setRun($run);
+                    $doctrine->persist($fieldData);
+                    $doctrine->flush($fieldData);
+                }
+
+                $doctrine->flush();
+
+                $files = $doctrine->getRepository('SlightScribeBundle:File')->findForAccessPoint($accessPoint);
+
+                return $this->render('SlightScribeBundle:Project:newRun.done.html.twig', array(
+                    'project' => $this->project,
+                    'projectVersion' => $projectVersion,
+                    'run' => $run,
+                    'files' => $files,
+                ));
+
+            } else {
+
+                // ############## USER TRIED TO SUBMIT BUT HAD ERRORS
+                $accessPointFormTask = new AccessPointFormTask($this->container, $accessPoint);
+
+
+                return $this->render('SlightScribeBundle:Project:newRun.html.twig', array(
+                    'form' => $accessPointFormTask->getHTMLForm($fieldsData),
+                    'email' => $email,
+                    'hasErrors' => true,
+                ));
+
+            }
         }
+
+        // ############## USER HAS NOT TRIED TO SUBMIT
 
         $accessPointFormTask = new AccessPointFormTask($this->container, $accessPoint);
 
 
         return $this->render('SlightScribeBundle:Project:newRun.html.twig', array(
             'form' => $accessPointFormTask->getHTMLForm(),
+            'email' => null,
+            'hasErrors' => false,
         ));
 
     }

@@ -110,6 +110,9 @@ class API1ProjectController extends Controller
         }
 
         // Actually Save!
+
+        // TODO check required fields set and error!
+
         $run = new Run();
         $run->setProject($this->project);
         $run->setProjectVersion($projectVersion);

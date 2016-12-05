@@ -27,6 +27,7 @@
                 <th>Title</th>
                 <th>Type</th>
                 <th>Added?</th>
+                <th>Required?</th>
                 <th></th>
             </tr>
             </thead>
@@ -51,8 +52,30 @@
                             No
                         {%  endif %}
                     </td>
+                    <td>
+                        {%  if field.isExisting %}
+                            {%  if field.isExisting.isRequired %}
+                                Required!
+                            {%  else %}
+                                Optional
+                            {%  endif %}
+                        {%  endif %}
+                    </td>
                     <td class="action-link">
                         {%  if field.isExisting %}
+                            {%  if field.isExisting.isRequired %}
+                                <form method="post">
+                                    <input type="hidden" name="action" value="optional">
+                                    <input type="hidden" name="id" value="{{ field.field.publicId }}">
+                                    <input type="submit" value="Make Optional">
+                                </form>
+                            {%  else %}
+                                <form method="post">
+                                    <input type="hidden" name="action" value="required">
+                                    <input type="hidden" name="id" value="{{ field.field.publicId }}">
+                                    <input type="submit" value="Make Required">
+                                </form>
+                            {%  endif %}
                             <form method="post">
                                 <input type="hidden" name="action" value="remove">
                                 <input type="hidden" name="id" value="{{ field.field.publicId }}">

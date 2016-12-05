@@ -11,13 +11,32 @@
 
     <form class="styled" action="" method="post" >
 
+
+        <style>
+            .field_required_label {
+                font-style: italic;
+            }
+        </style>
+
+        {% if hasErrors %}
+            <style>
+                .field_wrapper .field_required_missing {
+                    border: 2px solid red;
+                }
+                .field_wrapper .field_required_missing_label {
+                    color: red;
+                }
+            </style>
+            Plese put in Reu
+        {% endif %}
+
         <div style="border: 1px solid black;">
             {{  form | raw }}
         </div>
 
         <div>
             Your Email:
-            <input type="email" name="email">
+            <input type="email" name="email" value="{{ email }}">
         </div>
 
 
@@ -25,5 +44,6 @@
         <input type="submit" value="Get my letters" />
 
     </form>
+
 
 {% endblock %}

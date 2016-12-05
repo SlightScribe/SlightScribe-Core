@@ -83,6 +83,26 @@ class AdminProjectVersionAccessPointEditController extends AdminProjectVersionAc
             if ($field) {
                 $accessPointHasFieldRepo->removeFieldFromAccessPoint($field, $this->accessPoint);
             }
+        } else if ($request->request->get('action') == 'required') {
+            $field = $projectFieldRepo->findOneBy(array('project'=>$this->project, 'publicId'=> $request->request->get('id') ));
+            if ($field) {
+                $link = $accessPointHasFieldRepo->findOneBy(array('field'=>$field, 'accessPoint'=>$this->accessPoint));
+                if ($link) {
+                    $link->setIsRequired(true);
+                    $doctrine->persist($link);
+                    $doctrine->flush($link);
+                }
+            }
+        } else if ($request->request->get('action') == 'optional') {
+            $field = $projectFieldRepo->findOneBy(array('project'=>$this->project, 'publicId'=> $request->request->get('id') ));
+            if ($field) {
+                $link = $accessPointHasFieldRepo->findOneBy(array('field'=>$field, 'accessPoint'=>$this->accessPoint));
+                if ($link) {
+                    $link->setIsRequired(false);
+                    $doctrine->persist($link);
+                    $doctrine->flush($link);
+                }
+            }
         }
 
 

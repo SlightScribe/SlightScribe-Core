@@ -66,6 +66,7 @@ function SlightScribeNormalCreateRun(targetSelector, options, theme) {
         return html;
     };
     this.submit = function() {
+        // TODO: THIS NEEDS TO DEAL WITH REQUIRED FIELDS!!!!!
         var formData = $(this.targetSelector+ " .slightScribeProject form").serialize();
         $(this.targetSelector).html(this.theme.savingHTML({}));
         $.ajax({

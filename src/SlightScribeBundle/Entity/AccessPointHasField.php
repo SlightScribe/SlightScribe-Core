@@ -31,6 +31,12 @@ class AccessPointHasField {
     private $field;
 
 
+    /**
+     *
+     * @ORM\Column(name="is_required", type="boolean", nullable=false)
+     */
+    protected $isRequired = false;
+
 
     /**
      * @var datetime $createdAt
@@ -72,6 +78,22 @@ class AccessPointHasField {
     public function setField($field)
     {
         $this->field = $field;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsRequired()
+    {
+        return $this->isRequired;
+    }
+
+    /**
+     * @param mixed $isRequired
+     */
+    public function setIsRequired($isRequired)
+    {
+        $this->isRequired = $isRequired;
     }
 
     /**
