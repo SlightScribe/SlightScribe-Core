@@ -23,6 +23,14 @@ form .cancel {
 }
 
 
+.templatePreviewError {
+    margin: 10px 0;
+    border: 1px solid red;
+    padding: 20px;
+    background: #ffd5d5;
+}
+
+
 
 .templateContents {
     margin: 10px 0;
