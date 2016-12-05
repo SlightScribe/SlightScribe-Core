@@ -36,8 +36,6 @@ rm -r /vagrant/app/cache/dev/*
 a2enmod rewrite
 /etc/init.d/apache2 restart
 
-php app/console doctrine:migrations:migrate --no-interaction
-
 chown -R www-data:www-data /vagrant/app/cache/prod/
 chown -R www-data:www-data /vagrant/app/cache/dev/
 
@@ -45,6 +43,8 @@ chown -R www-data:www-data /vagrant/app/cache/dev/
 if [ -f /vagrant/import.sql ]
   then
     mysql -u root --password=password app -e "SOURCE /vagrant/import.sql"
+  else
+    php app/console doctrine:migrations:migrate --no-interaction
 fi
 
 apt-get install -y ruby ruby-dev build-essential  sqlite3 libsqlite3-dev
