@@ -40,7 +40,7 @@ class Run {
     private $projectVersion;
 
     /**
-     * @ORM\Column(name="public_id", type="string", length=250, unique=true, nullable=false)
+     * @ORM\Column(name="public_id", type="string", length=250, unique=false, nullable=false)
      * @Assert\NotBlank()
      */
     private $publicId;
