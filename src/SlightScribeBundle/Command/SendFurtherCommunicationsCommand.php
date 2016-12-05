@@ -35,7 +35,7 @@ class SendFurtherCommunicationsCommand extends ContainerAwareCommand
 
         foreach($doctrine->getRepository('SlightScribeBundle:Run')->getActiveProjectRunsWithAtLeastOneRunCommunication()  as $projectRun) {
 
-            $output->writeln("Project Run " . $projectRun->getPublicId());
+            $output->writeln("Project ".$projectRun->getProject()->getPublicId()." Run ". $projectRun->getPublicId());
 
             // Get last communication sent
             $lastRunCommunication = $doctrine->getRepository('SlightScribeBundle:RunHasCommunication')->getLastForRun($projectRun);
@@ -48,8 +48,14 @@ class SendFurtherCommunicationsCommand extends ContainerAwareCommand
                 if ($isFurtherCommunicationReadyToSendTask->go($nextCommunication, $lastRunCommunication)) {
 
                     $output->writeln("Sending Next Communication ".$nextCommunication->getPublicId());
-                    $createAndSendProjectRunCommunicationTask->createAndSend($projectRun, $nextCommunication);
-
+                    try {
+                        $createAndSendProjectRunCommunicationTask->createAndSend($projectRun, $nextCommunication);
+                    } catch (\Exception $e) {
+                        $this->getContainer()->get('logger')->error(
+                            'Error While Trying to send further communication for project '.$projectRun->getProject()->getPublicId()." Run ". $projectRun->getPublicId(). " Error ". $e->getMessage()
+                        );
+                        $output->writeln("Error ".$e->getMessage());
+                    }
                 }
 
             } else {

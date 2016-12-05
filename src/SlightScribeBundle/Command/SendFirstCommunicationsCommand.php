@@ -31,11 +31,18 @@ class SendFirstCommunicationsCommand extends ContainerAwareCommand
 
         foreach($doctrine->getRepository('SlightScribeBundle:Run')->getProjectRunsWithNoProjectRunLetters()  as $projectRun) {
 
-            $output->writeln("Project Run ". $projectRun->getPublicId());
+            $output->writeln("Project ".$projectRun->getProject()->getPublicId()." Run ". $projectRun->getPublicId());
 
             $projectCommunication = $doctrine->getRepository('SlightScribeBundle:Communication')->getFirstForProjectVersion($projectRun->getProjectVersion());
 
-            $createAndSendProjectRunCommunicationTask->createAndSend($projectRun, $projectCommunication);
+            try {
+                $createAndSendProjectRunCommunicationTask->createAndSend($projectRun, $projectCommunication);
+            } catch(\Exception $e) {
+                $this->getContainer()->get('logger')->error(
+                    'Error While Trying to send first communication for project '.$projectRun->getProject()->getPublicId()." Run ". $projectRun->getPublicId(). " Error ". $e->getMessage()
+                );
+                $output->writeln("Error ".$e->getMessage());
+            }
 
         }
 
