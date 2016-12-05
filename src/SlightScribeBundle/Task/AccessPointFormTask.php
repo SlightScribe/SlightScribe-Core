@@ -78,7 +78,7 @@ class AccessPointFormTask
             $value = $runHasField ? $runHasField->getValue() : '';
             return
                 '<span class="field_wrapper">'.
-                '<input type="text" name="field_'.$field->getPublicId().'" class="field_type_text field_name_'.$field->getPublicId().$extraClasses.'" placeholder="'.htmlspecialchars($field->getLabel(), ENT_QUOTES).'" value="'.htmlspecialchars($value, ENT_QUOTES).'">'.
+                '<input type="text" name="field_'.$field->getPublicId().'" class="field_type_date field_name_'.$field->getPublicId().$extraClasses.'" placeholder="'.htmlspecialchars($field->getLabel(), ENT_QUOTES).'" value="'.htmlspecialchars($value, ENT_QUOTES).'">'.
 
                 ($isRequired ? ' <span class="field_required_label' .($isRequiredAndMissing ? ' field_required_missing_label' :'').'">*(required)</span>' : '').
                 '</span>';
