@@ -67,6 +67,7 @@ class ProjectController extends Controller
             }
 
             $hasErrors = false;
+            $hasErrorsEmail = false;
 
             $fieldsData = array();
             foreach($fields as $field) {
@@ -77,6 +78,11 @@ class ProjectController extends Controller
                     $hasErrors = true;
                 }
                 $fieldsData[$field->getPublicId()] = $runField;
+            }
+
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $hasErrors = true;
+                $hasErrorsEmail = true;
             }
 
             if (!$hasErrors) {
@@ -123,6 +129,7 @@ class ProjectController extends Controller
                     'form' => $accessPointFormTask->getHTMLForm($fieldsData),
                     'email' => $email,
                     'hasErrors' => true,
+                    'hasErrorsEmail' => $hasErrorsEmail,
                 ));
 
             }
@@ -137,6 +144,7 @@ class ProjectController extends Controller
             'form' => $accessPointFormTask->getHTMLForm(),
             'email' => null,
             'hasErrors' => false,
+            'hasErrorsEmail' => false,
         ));
 
     }

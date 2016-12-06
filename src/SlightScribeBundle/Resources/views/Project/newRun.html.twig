@@ -36,9 +36,10 @@
             {{  form | raw }}
         </div>
 
-        <div>
+        <div class="field_wrapper">
             Your Email:
-            <input type="email" name="email" value="{{ email }}">
+            <input type="email" name="email" value="{{ email }}" class="field_required {% if hasErrorsEmail %}field_required_missing{%  endif %}">
+            <span class="field_required_label {% if hasErrorsEmail %}field_required_missing_label{%  endif %}">*(required)</span>
         </div>
 
 

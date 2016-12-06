@@ -113,6 +113,8 @@ class API1ProjectController extends Controller
 
         // TODO check required fields set and error!
 
+        // TODO check required email set and error!
+
         $run = new Run();
         $run->setProject($this->project);
         $run->setProjectVersion($projectVersion);
