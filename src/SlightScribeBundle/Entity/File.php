@@ -240,6 +240,14 @@ class File {
         }
     }
 
+    public function getFileExtension() {
+        if ($this->isTypeLetterPdf()) {
+            return '.pdf';
+        } else if ($this->isTypeLetterText()) {
+            return '.txt';
+        }
+    }
+
     /**
      * @param string $type
      */

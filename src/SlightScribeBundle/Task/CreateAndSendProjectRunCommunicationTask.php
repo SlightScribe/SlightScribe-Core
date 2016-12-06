@@ -71,7 +71,7 @@ class CreateAndSendProjectRunCommunicationTask
             $fileName = $this->makeFileTask->getFileName($runCommunicationFile);
 
             $attachment = Swift_Attachment::fromPath($fileName);
-            $attachment->setFilename($runCommunicationFile->getFileName());
+            $attachment->setFilename($runCommunicationFile->getFileName() . $runCommunicationFile->getFile()->getFileExtension());
             $attachment->setContentType($runCommunicationFile->getFile()->getContentType());
 
             $message->attach($attachment);
