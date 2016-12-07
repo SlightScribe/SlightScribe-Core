@@ -32,20 +32,23 @@
             </div>
         {% endif %}
 
-        <div style="border: 1px solid black; padding: 5px;">
-            {{  form | raw }}
+        <div style="background: #ccc; padding: 0 0 10px 0;">
+            <div style="border: 1px solid black; padding: 5px; background: white;">
+                {{  form | raw }}
+            </div>
+
+            <div style="padding: 20px;">
+                <div class="field_wrapper" style="padding: 20px;">
+                    Your Email:
+                    <input type="email" name="email" value="{{ email }}" class="field_required {% if hasErrorsEmail %}field_required_missing{%  endif %}">
+                    <span class="field_required_label {% if hasErrorsEmail %}field_required_missing_label{%  endif %}">*(required)</span>
+                </div>
+
+
+                <input type="hidden" name="action" value="new">
+                <input type="submit" value="Get my letters" />
+            </div>
         </div>
-
-        <div class="field_wrapper">
-            Your Email:
-            <input type="email" name="email" value="{{ email }}" class="field_required {% if hasErrorsEmail %}field_required_missing{%  endif %}">
-            <span class="field_required_label {% if hasErrorsEmail %}field_required_missing_label{%  endif %}">*(required)</span>
-        </div>
-
-
-        <input type="hidden" name="action" value="new">
-        <input type="submit" value="Get my letters" />
-
     </form>
 
 
