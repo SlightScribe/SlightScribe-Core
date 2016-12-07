@@ -14,6 +14,11 @@ form .cancel {
     text-align: right;
 }
 
+form textarea {
+    width: 95%;
+    height: 200px;
+}
+
 
 .templatePreview {
     margin: 10px 0;

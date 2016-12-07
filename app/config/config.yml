@@ -121,6 +121,11 @@ assetic:
                 - '@SlightScribeBundle/Resources/public/css/main.css'
             filters: [cssrewrite]
 
+        slightscribe_public_css:
+            inputs:
+                - '@SlightScribeBundle/Resources/public/css/public.css'
+            filters: [cssrewrite]
+
         slightscribe_normal_jquery_v1_js:
             inputs:
                 - '@SlightScribeBundle/Resources/public/js/external/normal-jquery-v1.js'
