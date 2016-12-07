@@ -70,6 +70,12 @@ class File {
     private $type = "LETTER_TEXT";
 
     /**
+     * @ORM\Column(name="letter_content_template_header_right", type="text", nullable=true)
+     */
+    private $letterContentTemplateHeaderRight;
+
+
+    /**
      * @ORM\Column(name="letter_content_template", type="text", nullable=true)
      */
     private $letterContentTemplate;
@@ -167,6 +173,24 @@ class File {
     {
         $this->titleAdmin = $titleAdmin;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getLetterContentTemplateHeaderRight()
+    {
+        return $this->letterContentTemplateHeaderRight;
+    }
+
+    /**
+     * @param mixed $letterContentTemplateHeaderRight
+     */
+    public function setLetterContentTemplateHeaderRight($letterContentTemplateHeaderRight)
+    {
+        $this->letterContentTemplateHeaderRight = $letterContentTemplateHeaderRight;
+    }
+
+
 
     /**
      * @return mixed

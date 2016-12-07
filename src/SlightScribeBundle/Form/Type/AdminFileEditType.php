@@ -24,6 +24,11 @@ class AdminFileEditType extends AbstractType
         ));
 
 
+        $builder->add('letterContentTemplateHeaderRight', 'textarea', array(
+            'required' => false,
+            'label'=>'Letter Content (Header Right)'
+        ));
+
         $builder->add('letterContentTemplate', 'textarea', array(
             'required' => false,
             'label'=>'Letter Content'

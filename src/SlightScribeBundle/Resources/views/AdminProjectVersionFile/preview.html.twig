@@ -21,6 +21,10 @@
 
     <h3>Template</h3>
 
+    <div class="templateContentsHeaderRight">
+        {{ file.letterContentTemplateHeaderRight | nl2br  }}
+    </div>
+
     <div class="templateContents">
         {{ file.letterContentTemplate | nl2br  }}
     </div>
@@ -53,6 +57,9 @@
             <p>{{ filePreviewError.message  }}</p>
         </div>
     {%  else %}
+        <div class="templatePreviewHeaderRight">
+            {{ filePreviewContentsHeaderRight | nl2br }}
+        </div>
         <div class="templatePreview">
             {{ filePreviewContents | nl2br }}
         </div>

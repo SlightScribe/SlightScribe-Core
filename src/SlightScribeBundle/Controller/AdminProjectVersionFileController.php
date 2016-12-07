@@ -90,9 +90,12 @@ class AdminProjectVersionFileController extends Controller
 
         $task = new GetFileTemplateContentsTask($this->container);
         $templateContents = "";
+        $templateContentsHeaderRight = "";
         $templateError = null;
         try {
-            $templateContents = $task->get($run, $this->file, $projectRunFields);
+            $templates = $task->get($run, $this->file, $projectRunFields);
+            $templateContents = $templates['template'];
+            $templateContentsHeaderRight = $templates['template_header_right'];
         } catch (\Exception $e) {
             $templateError = array(
                 'message' => $e->getMessage(),
@@ -104,6 +107,7 @@ class AdminProjectVersionFileController extends Controller
             'version' => $this->projectVersion,
             'file' => $this->file,
             'filePreviewContents' => $templateContents,
+            'filePreviewContentsHeaderRight' => $templateContentsHeaderRight,
             'filePreviewError' => $templateError,
             'fields' => $fields,
         ));

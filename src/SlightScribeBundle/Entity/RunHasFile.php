@@ -50,6 +50,11 @@ class RunHasFile extends BaseRunFile {
     private $sentAt;
 
     /**
+     * @ORM\Column(name="letter_content_header_right", type="text", nullable=true)
+     */
+    private $letterContentHeaderRight;
+
+    /**
      * @ORM\Column(name="letter_content", type="text", nullable=true)
      */
     private $letterContent;
@@ -150,6 +155,24 @@ class RunHasFile extends BaseRunFile {
     {
         $this->letterContent = $letterContent;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getLetterContentHeaderRight()
+    {
+        return $this->letterContentHeaderRight;
+    }
+
+    /**
+     * @param mixed $letterContentHeaderRight
+     */
+    public function setLetterContentHeaderRight($letterContentHeaderRight)
+    {
+        $this->letterContentHeaderRight = $letterContentHeaderRight;
+    }
+
+
 
     /**
      * @return mixed

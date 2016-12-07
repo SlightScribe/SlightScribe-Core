@@ -38,8 +38,12 @@ class MakeFileTask
 
             $pdf = new \FPDF();
             $pdf->AddPage();
-            $pdf->SetFont('Arial','',14);
-            $pdf->MultiCell(0,10,$runCommunicationFile->getLetterContent());
+            $pdf->SetFont('Arial','',12);
+            if ($runCommunicationFile->getLetterContentHeaderRight()) {
+                $pdf->Cell(100);
+                $pdf->MultiCell(0,5,$runCommunicationFile->getLetterContentHeaderRight());
+            }
+            $pdf->MultiCell(0,5,$runCommunicationFile->getLetterContent());
             $pdf->Output('F', $filename);
 
         } else {

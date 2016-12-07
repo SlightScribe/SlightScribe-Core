@@ -50,7 +50,12 @@ class GetFileTemplateContentsTask {
         }
 
         try {
-            return $this->container->get('twig')->createTemplate($file->getLetterContentTemplate())->render($twigVariables);
+
+            $return = array();
+            $return['template'] = $this->container->get('twig')->createTemplate($file->getLetterContentTemplate())->render($twigVariables);
+            $return['template_header_right'] = $this->container->get('twig')->createTemplate($file->getLetterContentTemplateHeaderRight())->render($twigVariables);
+            return $return;
+
         } catch (\Twig_Error $e) {
 
             if ($file->getId()) {
@@ -60,6 +65,7 @@ class GetFileTemplateContentsTask {
                 // We might have been passed a dummy run, in which case don't save it.
                 $fileTemplateError->setRun($run->getId() ? $run : null);
                 $fileTemplateError->setLetterContentTemplate($file->getLetterContentTemplate());
+                $fileTemplateError->setLetterContentTemplateHeaderRight($file->getLetterContentTemplateHeaderRight());
                 $fileTemplateError->setTwigVariables(json_encode($twigVariables, 0, 3));
                 $fileTemplateError->setErrorCode($e->getCode());
                 $fileTemplateError->setErrorFile($e->getFile());

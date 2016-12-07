@@ -50,7 +50,10 @@ class CreateAndSaveProjectRunFileTask
         $runFile->setFile($file);
         $runFile->setFilename($file->getFilename());
 
-        $runFile->setLetterContent($this->getFileTemplateContentsTask->get($run, $file, $projectRunFields, $runCommunications));
+        $templates = $this->getFileTemplateContentsTask->get($run, $file, $projectRunFields, $runCommunications);
+
+        $runFile->setLetterContent($templates['template']);
+        $runFile->setLetterContentHeaderRight($templates['template_header_right']);
 
         if ($save) {
             $doctrine->persist($runFile);

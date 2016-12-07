@@ -23,4 +23,11 @@ abstract class BaseRunFile {
     public abstract function getLetterContent();
 
 
+    /**
+     * @return mixed
+     */
+    public abstract function getLetterContentHeaderRight();
+
+
 }
+

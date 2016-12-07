@@ -48,6 +48,11 @@ class FileTemplateError {
     private $letterContentTemplate;
 
     /**
+     * @ORM\Column(name="letter_content_template_header_right", type="text", nullable=true)
+     */
+    private $letterContentTemplateHeaderRight;
+
+    /**
      * @ORM\Column(name="twig_variables", type="text", nullable=true)
      */
     private $twigVariables;
@@ -151,6 +156,25 @@ class FileTemplateError {
     {
         $this->letterContentTemplate = $letterContentTemplate;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getLetterContentTemplateHeaderRight()
+    {
+        return $this->letterContentTemplateHeaderRight;
+    }
+
+    /**
+     * @param mixed $letterContentTemplateHeaderRight
+     */
+    public function setLetterContentTemplateHeaderRight($letterContentTemplateHeaderRight)
+    {
+        $this->letterContentTemplateHeaderRight = $letterContentTemplateHeaderRight;
+    }
+
+
+
 
     /**
      * @return mixed
