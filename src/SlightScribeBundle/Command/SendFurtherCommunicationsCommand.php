@@ -33,6 +33,8 @@ class SendFurtherCommunicationsCommand extends ContainerAwareCommand
         $createAndSendProjectRunCommunicationTask = new CreateAndsendProjectRunCommunicationTask($this->getContainer());
         $isFurtherCommunicationReadyToSendTask = new IsFurtherCommunicationReadyToSendTask(new \DateTime());
 
+        $output->writeln("Starting ". date("r"));
+
         foreach($doctrine->getRepository('SlightScribeBundle:Run')->getActiveProjectRunsWithAtLeastOneRunCommunication()  as $projectRun) {
 
             $output->writeln("Project ".$projectRun->getProject()->getPublicId()." Run ". $projectRun->getPublicId());
@@ -69,7 +71,7 @@ class SendFurtherCommunicationsCommand extends ContainerAwareCommand
 
         }
 
-        $output->writeln('Finished All');
+        $output->writeln("Finished ". date("r"));
 
     }
 

@@ -29,6 +29,8 @@ class SendFirstCommunicationsCommand extends ContainerAwareCommand
         $doctrine = $this->getContainer()->get('doctrine')->getManager();
         $createAndSendProjectRunCommunicationTask = new CreateAndSendProjectRunCommunicationTask($this->getContainer());
 
+        $output->writeln("Starting ". date("r"));
+
         foreach($doctrine->getRepository('SlightScribeBundle:Run')->getProjectRunsWithNoProjectRunLetters()  as $projectRun) {
 
             $output->writeln("Project ".$projectRun->getProject()->getPublicId()." Run ". $projectRun->getPublicId());
@@ -46,7 +48,7 @@ class SendFirstCommunicationsCommand extends ContainerAwareCommand
 
         }
 
-        $output->writeln('Finished All');
+        $output->writeln("Finished ". date("r"));
 
     }
 
