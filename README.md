@@ -43,6 +43,18 @@ Each project has fields you can configure.
 
 These are tied to a project rather than a project version so that TODO
 
+## How to give admin access to a user
+
+Get the user to register in the browser at /register
+
+In the command line, run
+
+    php app/console fos:user:promote
+
+Enter the new users name and for a role enter: ROLE_ADMIN
+
+The user will have to log out and in again to see the difference.
+
 ## Vagrant for development
 
 Use Vagrant and Virtual Box for development
