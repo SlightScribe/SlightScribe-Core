@@ -122,8 +122,16 @@ slight_scribe_admin_project_version_file_preview:
     defaults: { _controller: SlightScribeBundle:AdminProjectVersionFileEdit:preview }
 
 slight_scribe_admin_project_fields_list:
-    path:     /admin/project/{projectId}/fields
+    path:     /admin/project/{projectId}/field
     defaults: { _controller: SlightScribeBundle:AdminProject:fields }
+
+slight_scribe_admin_project_field_show:
+    path:     /admin/project/{projectId}/field/{fieldId}
+    defaults: { _controller: SlightScribeBundle:AdminProjectField:index }
+
+slight_scribe_admin_project_field_edit:
+    path:     /admin/project/{projectId}/field/{fieldId}/edit
+    defaults: { _controller: SlightScribeBundle:AdminProjectFieldEdit:edit }
 
 slight_scribe_admin_project_new_field_text:
     path:     /admin/project/{projectId}/newfield/text

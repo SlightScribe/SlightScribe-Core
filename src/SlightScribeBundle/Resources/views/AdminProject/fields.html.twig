@@ -40,7 +40,9 @@
                             Date
                         {%  endif %}
                     </td>
-                    <td class="action-link"></td>
+                    <td class="action-link">
+                        <a href="{{  path('slight_scribe_admin_project_field_show',{'projectId':project.publicId,'fieldId':field.publicId}) }}" class="btn btn-default">View</a>
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
