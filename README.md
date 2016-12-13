@@ -41,7 +41,79 @@ The limits can be configured in app/config/parameters.yml
 
 Each project has fields you can configure.
 
-These are tied to a project rather than a project version so that TODO
+These are tied to a project rather than a project version so that when a project is upgraded from a old version to a new version, existing data can be mapped across in some way. There aren't yet tools to do that, but that is the intention.
+
+## Access Points
+
+At the moment, each Project Version only has one Access Point, and this Access Point is the default Access Point that a user starts by accessing when they start a process.
+
+The intention is that in the future, you will be able to define other points and the user will be directed back to them. Eg
+
+  * User starts by filling out the default access point.
+  * User gets first Communication/email.
+  * A week later, User gets second Communication/email. This contains a link to continue.
+  * This link opens a webpage containing a form, fields and info defined by a second access point.
+  * After this, third Communication/email is sent.
+
+This allows the user to be checked so we can make sure details given are still correct and have not changed since the start of the process.
+
+### Access points have fields
+
+It can defined which fields will be set on an access point.
+
+### Access points have a form
+
+The form is shown to the user.
+
+For each field on this access point, the placeholder {{FIELD_NAME}} will be replaced with the actual form element.
+
+### Access points have files
+
+When the access point is completed, the user can be shown links to download files straight away.
+
+## File
+
+A file can be given to the user either by attaching to an email, or by making available through an access point.
+
+A file defines what type of file it is, currently options are:
+
+ * Text
+ * PDF
+
+ A file also contains templates. These templates are rendered to provide the content in the file. There are several templates:
+
+ * Letter Content Template Header Right - if given, this will be at the top of the first page only and will be indented so it appears on the right.
+ * Letter Content Template - main content
+
+The template has the following variables made available to it:
+
+ * fields. Access by field name, eg ```{{ fields.field_name }}```
+ * previousCommunications - the date of each one. eg ```{{ previousCommunications[communication_public_id].created_at }}```
+ * projectRun. From here you can access ```{{ projectRun.email }}``` and ```{{ projectRun.createdAt }}```
+
+The template is [a Twig template](http://twig.sensiolabs.org/) and thus options available in twig (eg If statements) are also available here. It is possible to introduce errors writing Twig templates, so the Preview feature should always be used to test them.
+
+## Communication
+
+A communication is an email sent to a user.
+
+Each communication has:
+
+ * A sequence number, to order them.
+ * A days before field, to set how much of a gap to leave between emails.
+ * A list of files which are attached to the email.
+ * A subject template.
+ * A body Text email template.
+ * A body HTML email template. This is optional.
+
+The template has the following variables made available to it:
+
+ * fields. Access by field name, eg ```{{ fields.field_name }}```
+ * previousCommunications - the date of each one. eg ```{{ previousCommunications[communication_public_id].created_at }}```
+ * projectRun. From here you can access ```{{ projectRun.email }}``` and ```{{ projectRun.createdAt }}```
+ * stop_url - A URL of a webpage. Here, the user can stop the process and they won't receive any further emails.
+
+The template is [a Twig template](http://twig.sensiolabs.org/) and thus options available in twig (eg If statements) are also available here. It is possible to introduce errors writing Twig templates, so the Preview feature should always be used to test them.
 
 ## How to give admin access to a user
 
