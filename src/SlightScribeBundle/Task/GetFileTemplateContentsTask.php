@@ -52,8 +52,12 @@ class GetFileTemplateContentsTask {
         try {
 
             $return = array();
-            $return['template'] = $this->container->get('twig')->createTemplate($file->getLetterContentTemplate())->render($twigVariables);
-            $return['template_header_right'] = $this->container->get('twig')->createTemplate($file->getLetterContentTemplateHeaderRight())->render($twigVariables);
+            $return['template'] = $file->hasLetterContentTemplate() ?
+                $this->container->get('twig')->createTemplate($file->getLetterContentTemplate())->render($twigVariables) :
+                '';
+            $return['template_header_right'] = $file->hasLetterContentTemplateHeaderRight() ?
+                $this->container->get('twig')->createTemplate($file->getLetterContentTemplateHeaderRight())->render($twigVariables) :
+                '';
             return $return;
 
         } catch (\Twig_Error $e) {

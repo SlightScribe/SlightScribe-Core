@@ -183,6 +183,14 @@ class File {
     }
 
     /**
+     * @return boolean
+     */
+    public function hasLetterContentTemplateHeaderRight()
+    {
+        return (boolean)trim($this->letterContentTemplateHeaderRight);
+    }
+
+    /**
      * @param mixed $letterContentTemplateHeaderRight
      */
     public function setLetterContentTemplateHeaderRight($letterContentTemplateHeaderRight)
@@ -198,6 +206,14 @@ class File {
     public function getLetterContentTemplate()
     {
         return $this->letterContentTemplate;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function hasLetterContentTemplate()
+    {
+        return (boolean)trim($this->letterContentTemplate);
     }
 
     /**
