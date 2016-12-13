@@ -11,6 +11,16 @@ This is a Symfony app that lets you run a letter writing tool. Users are asked f
 
 This app can host multiple projects. Each project has it's own set of data and configuration options.
 
+## A Project Run
+
+A Project Run is one user, going through a project.
+
+They start by filling in a form with details.
+
+After that they might be able to download files or they might be sent emails. They may be sent more than one email, with a gap between them.
+
+They can visit a URL during the process to stop the process half way through. On successfully stopping a process, the user is redirected to a URL defined on the Project Version (redirect_user_to_after_manual_stop column on project_version table).
+
 ## Project Versions
 
 Each project has multiple versions.
@@ -40,6 +50,14 @@ The limits can be configured in app/config/parameters.yml
 ## Fields
 
 Each project has fields you can configure.
+
+Fields can be of types:
+
+ * Text - single line Text.
+ * TextArea - multi line Text.
+ * Date - a date.
+
+Each field has a Public Id, Or Key. This should be alphanumeric only and this will be referenced by templates later.
 
 These are tied to a project rather than a project version so that when a project is upgraded from a old version to a new version, existing data can be mapped across in some way. There aren't yet tools to do that, but that is the intention.
 
@@ -77,19 +95,19 @@ A file can be given to the user either by attaching to an email, or by making av
 
 A file defines what type of file it is, currently options are:
 
- * Text
- * PDF
+  * Text
+  *  PDF
 
- A file also contains templates. These templates are rendered to provide the content in the file. There are several templates:
+A file also contains templates. These templates are rendered to provide the content in the file. There are several templates:
 
- * Letter Content Template Header Right - if given, this will be at the top of the first page only and will be indented so it appears on the right.
- * Letter Content Template - main content
+  *  Letter Content Template Header Right - if given, this will be at the top of the first page only and will be indented so it appears on the right.
+  *  Letter Content Template - main content
 
 The template has the following variables made available to it:
 
- * fields. Access by field name, eg ```{{ fields.field_name }}```
- * previousCommunications - the date of each one. eg ```{{ previousCommunications[communication_public_id].created_at }}```
- * projectRun. From here you can access ```{{ projectRun.email }}``` and ```{{ projectRun.createdAt }}```
+  *  fields. Access by field name, eg ```{{ fields.field_name }}```
+  *  previousCommunications - the date of each one. eg ```{{ previousCommunications[communication_public_id].created_at }}```
+  *  projectRun. From here you can access ```{{ projectRun.email }}``` and ```{{ projectRun.createdAt }}```
 
 The template is [a Twig template](http://twig.sensiolabs.org/) and thus options available in twig (eg If statements) are also available here. It is possible to introduce errors writing Twig templates, so the Preview feature should always be used to test them.
 
@@ -99,19 +117,19 @@ A communication is an email sent to a user.
 
 Each communication has:
 
- * A sequence number, to order them.
- * A days before field, to set how much of a gap to leave between emails.
- * A list of files which are attached to the email.
- * A subject template.
- * A body Text email template.
- * A body HTML email template. This is optional.
+  *  A sequence number, to order them.
+  *  A days before field, to set how much of a gap to leave between emails.
+  *  A list of files which are attached to the email.
+  *  A subject template.
+  *  A body Text email template.
+  *  A body HTML email template. This is optional.
 
 The template has the following variables made available to it:
 
- * fields. Access by field name, eg ```{{ fields.field_name }}```
- * previousCommunications - the date of each one. eg ```{{ previousCommunications[communication_public_id].created_at }}```
- * projectRun. From here you can access ```{{ projectRun.email }}``` and ```{{ projectRun.createdAt }}```
- * stop_url - A URL of a webpage. Here, the user can stop the process and they won't receive any further emails.
+  *  fields. Access by field name, eg ```{{ fields.field_name }}```
+  *  previousCommunications - the date of each one. eg ```{{ previousCommunications[communication_public_id].created_at }}```
+  *  projectRun. From here you can access ```{{ projectRun.email }}``` and ```{{ projectRun.createdAt }}```
+  *  stop_url - A URL of a webpage. Here, the user can stop the process and they won't receive any further emails.
 
 The template is [a Twig template](http://twig.sensiolabs.org/) and thus options available in twig (eg If statements) are also available here. It is possible to introduce errors writing Twig templates, so the Preview feature should always be used to test them.
 
