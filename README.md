@@ -95,7 +95,7 @@ A file can be given to the user either by attaching to an email, or by making av
 
 A file defines what type of file it is, currently options are:
 
-  * Text
+  *  Text
   *  PDF
 
 A file also contains templates. These templates are rendered to provide the content in the file. There are several templates:
@@ -117,7 +117,7 @@ A communication is an email sent to a user.
 
 Each communication has:
 
-  *  A sequence number, to order them.
+  *  A sequence number, to order them. Lower numbers are sent first.
   *  A days before field, to set how much of a gap to leave between emails.
   *  A list of files which are attached to the email.
   *  A subject template.
