@@ -41,9 +41,9 @@ class MakeFileTask
             $pdf->SetFont('Arial','',12);
             if ($runCommunicationFile->getLetterContentHeaderRight()) {
                 $pdf->Cell(100);
-                $pdf->MultiCell(0,5,$runCommunicationFile->getLetterContentHeaderRight());
+                $pdf->MultiCell(0,5,iconv("UTF-8", "ISO-8859-1", $runCommunicationFile->getLetterContentHeaderRight()));
             }
-            $pdf->MultiCell(0,5,$runCommunicationFile->getLetterContent());
+            $pdf->MultiCell(0,5,iconv("UTF-8", "ISO-8859-1", $runCommunicationFile->getLetterContent()));
             $pdf->Output('F', $filename);
 
         } else {
