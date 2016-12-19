@@ -67,6 +67,10 @@ class AccessPoint
      */
     private $fromOldVersion;
 
+    /**
+     * @ORM\Column(name="form_intro_html", type="text", nullable=true)
+     */
+    private $formIntroHTML;
 
     /**
      * @ORM\Column(name="form", type="text", nullable=true)
@@ -224,11 +228,21 @@ class AccessPoint
         $this->fromOldVersion = $fromOldVersion;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getFormIntroHTML()
+    {
+        return $this->formIntroHTML;
+    }
 
-
-
-
-
+    /**
+     * @param mixed $formIntroHTML
+     */
+    public function setFormIntroHTML($formIntroHTML)
+    {
+        $this->formIntroHTML = $formIntroHTML;
+    }
 
 
     /**

@@ -127,6 +127,7 @@ class ProjectController extends Controller
 
                 return $this->render('SlightScribeBundle:Project:newRun.html.twig', array(
                     'form' => $accessPointFormTask->getHTMLForm($fieldsData),
+                    'formIntroHTML' => $accessPoint->getFormIntroHTML(),
                     'email' => $email,
                     'hasErrors' => true,
                     'hasErrorsEmail' => $hasErrorsEmail,
@@ -142,6 +143,7 @@ class ProjectController extends Controller
 
         return $this->render('SlightScribeBundle:Project:newRun.html.twig', array(
             'form' => $accessPointFormTask->getHTMLForm(),
+            'formIntroHTML' => $accessPoint->getFormIntroHTML(),
             'email' => null,
             'hasErrors' => false,
             'hasErrorsEmail' => false,

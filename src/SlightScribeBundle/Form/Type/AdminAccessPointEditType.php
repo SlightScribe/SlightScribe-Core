@@ -24,6 +24,12 @@ class AdminAccessPointEditType extends AbstractType
         ));
 
 
+        $builder->add('formIntroHTML', 'textarea', array(
+            'required' => false,
+            'label'=>'Form Intro (HTML)'
+        ));
+
+
         $builder->add('form', 'textarea', array(
             'required' => true,
             'label'=>'Form'
