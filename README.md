@@ -85,6 +85,8 @@ The form is shown to the user.
 
 For each field on this access point, the placeholder {{FIELD_NAME}} will be replaced with the actual form element.
 
+A Form Intro can also be specified in HTML. This will be shown above the form.
+
 ### Access points have files
 
 When the access point is completed, the user can be shown links to download files straight away.
